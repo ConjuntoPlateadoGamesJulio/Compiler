@@ -3,12 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/j_die/Documents/NetBeansProjects/Compiler/src/compiler/lexical_Analysis.java</file>
-            <file>file:/C:/Users/j_die/Documents/NetBeansProjects/Compiler/src/Interface/Interface.java</file>
-            <file>file:/C:/Users/j_die/Documents/NetBeansProjects/Compiler/src/compiler/Analysis.java</file>
-            <file>file:/C:/Users/j_die/Documents/NetBeansProjects/Compiler/src/compiler/data.java</file>
-            <file>file:/C:/Users/j_die/Documents/NetBeansProjects/Compiler/src/compiler/Compiler.java</file>
-            <file>file:/C:/Users/j_die/Documents/NetBeansProjects/Compiler/src/compiler/sintactic_Analysis.java</file>
+            <file>file:/C:/Users/Carlos/Documents/GitHub/Compiler/Compiler/src/compiler/lexical_Analysis.java</file>
+            <file>file:/C:/Users/Carlos/Documents/GitHub/Compiler/Compiler/src/compiler/sintactic_Analysis.java</file>
+            <file>file:/C:/Users/Carlos/Documents/GitHub/Compiler/Compiler/src/compiler/data.java</file>
+            <file>file:/C:/Users/Carlos/Documents/GitHub/Compiler/Compiler/src/compiler/Compiler.java</file>
         </group>
     </open-files>
 </project-private>

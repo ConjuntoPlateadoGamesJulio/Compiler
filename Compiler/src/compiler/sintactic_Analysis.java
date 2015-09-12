@@ -152,7 +152,9 @@ private int indice_errores = -1;
             this.errores[indice_errores] = "error en llaves";
         }
     }
+    public void automataIf(){
     
+    }
     public void print_errors(){
         String texto_errores="";
         for(int j = 0; j <= indice_errores; j ++)
