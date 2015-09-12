@@ -47,6 +47,7 @@ public class Analysis implements ActionListener{
             sA.proccess();//borra panel de errores
             sA.cabeceras();
             sA.Main();
+            //sA.While();
             sA.print_errors();//imprime vector de errores
             
         }

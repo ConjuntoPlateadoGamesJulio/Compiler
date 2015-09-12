@@ -152,7 +152,7 @@ private int indice_errores = -1;
             this.errores[indice_errores] = "error en llaves";
         }
     }
-    
+
     
     
     public void print_errors(){

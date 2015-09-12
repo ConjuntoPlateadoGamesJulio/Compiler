@@ -58,6 +58,7 @@ private String patron = ("(include|stdio.h|stdlib.h|main|for|while|double|if|int
                 if(token4 != null)
                 {
                     System.out.println("numero: "+token4);
+                    data.insert_SymbolsTable(token4, "numero");
                 }     
             }
     }

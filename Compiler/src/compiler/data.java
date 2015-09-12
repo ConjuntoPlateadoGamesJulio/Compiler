@@ -54,6 +54,7 @@ public class data {
                                            {"String","29"},
                                            {"printf","30"}
                                           };
+    public String tipos[] = {"24","25","26","27","28","29"};
     
     public void setData(){//constructor
         this.row = -1;
@@ -109,11 +110,41 @@ public class data {
             }
         }
         
+        boolean variable = false;
         if(clase.equals("variable"))
+        {//JOptionPane.showMessageDialog(null, "hay variable");
+            for(int i = 0; i < 6; i++)
+            {
+                try {
+                    if (SymbolsTable[row - 1][column + 2].equals(tipos[i])) 
+                    {
+                        this.SymbolsTable[row][column] = token;//inserta el simbolo
+                        this.column = this.column + 1;//pasamos a  la otra columna
+                        this.SymbolsTable[row][column] = "variable";//se escribe el simbolo
+                        variable = true;
+                        break;
+                    }
+                }catch(NullPointerException|ArrayIndexOutOfBoundsException ex){}
+            }
+            if(variable != true)
+            {
+                for(int i = 0; i < count_symbols - 1; i ++)
+                {
+                    if(SymbolsTable[i][0].equals(token))
+                    {
+                        this.SymbolsTable[row][column] = token;//inserta el simbolo
+                        this.column = this.column + 1;//pasamos a  la otra columna
+                        this.SymbolsTable[row][column] = "variable";//se escribe el simbolo
+                    }
+                }
+            }
+        }
+        
+        if(clase.equals("numero"))
         {
             this.SymbolsTable[row][column] = token;//inserta el simbolo
             this.column = this.column + 1;//pasamos a  la otra columna
-            this.SymbolsTable[row][column] = "variable";//se escribe el simbolo
+            this.SymbolsTable[row][column] = "numero";//se escribe el simbolo
         }
         
     }
