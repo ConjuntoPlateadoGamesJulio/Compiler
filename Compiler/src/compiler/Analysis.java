@@ -44,8 +44,11 @@ public class Analysis implements ActionListener{
             lA.proccess();
             
             sA.set_sintactic_Analysis(Interface, data);
-            sA.proccess();
+            sA.proccess();//borra panel de errores
             sA.cabeceras();
+            sA.Main();
+            sA.print_errors();//imprime vector de errores
+            
         }
     }
 }

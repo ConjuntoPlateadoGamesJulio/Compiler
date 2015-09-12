@@ -44,6 +44,7 @@ public class Interface extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Compiler"));
 
         jTextArea2.setColumns(20);
+        jTextArea2.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
         jTextArea2.setRows(5);
         jScrollPane2.setViewportView(jTextArea2);
 
