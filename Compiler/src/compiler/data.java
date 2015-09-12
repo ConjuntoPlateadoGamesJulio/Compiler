@@ -34,7 +34,7 @@ public class data {
                                            {"/","13"},
                                            {";","14"},
                                            {"=","31"},
-                                           {"!","32"}// agregue simbolos 
+                                           {"!","32"}
                                           };
     
     public String dictionaryWReser[][] = {
@@ -99,7 +99,7 @@ public class data {
                 this.SymbolsTable[row][column] = "Simbolo";//se escribe el simbolo
                 this.column = this.column + 1;//pasamos a la otra columna
             
-                for(int i = 0; i < 14; i ++)
+                for(int i = 0; i < 16; i ++)
                     {
                         if(dictionarySimbol[i][0].equals(token))//se busca el simbolo
                         {
