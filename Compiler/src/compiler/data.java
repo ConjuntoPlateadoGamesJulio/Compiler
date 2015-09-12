@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 public class data {
     public int row;
     public int column;
+    public int count_symbols;
     private final int n = 30;
     public String [][] SymbolsTable = new String[n][3];
     
@@ -63,12 +64,14 @@ public class data {
                 SymbolsTable[i][j] = null;
             }
         }
+        this.count_symbols = 0;//variable que cuenta cuantos tokens se han introducido
     }
     
     public void insert_SymbolsTable(String token, String clase){
         //cada vez que entra
         this.row = this.row + 1;//la fila aumenta
         this.column = 0;//columna cero
+        this.count_symbols = count_symbols + 1;
         
         if(clase.equals("WR"))//si es una palabra reservada
         {
@@ -116,7 +119,7 @@ public class data {
     public void solo_probando(){
         System.out.println("TABLA DE SIMBOLOS");
         System.out.println("Token\tClase\tTipo");
-        for(int i= 0; i<n;i++)
+        for(int i= 0; i<count_symbols;i++)
         {
             for(int j = 0; j<3; j++)
             {

@@ -40,9 +40,10 @@ private Matcher matcher;
         int indice = 0;
         int full=5;
         boolean cabecera = false;
+        int count_cabecera = 0;
         String automata [] = {"1", "16", "4", "18", "5"};
         
-        for(int i = 0; i < 30; i ++)
+        for(int i = 0; i < data.count_symbols; i ++)
         {
             try{
                  if(data.SymbolsTable[i][2].equals("1"))
@@ -50,25 +51,25 @@ private Matcher matcher;
                         full = 5;
                         indice = i;
                         cabecera = true;
-                        break;
+                        count_cabecera = count_cabecera + 1;
                     }
-            }catch(NullPointerException ex){}
-        }
-        if(cabecera == false)//error
+            }catch(NullPointerException ex){}   
+        if(cabecera == false && count_cabecera == 0)//error
         {
             Interface.errors.setText("No hay cabecera o librerias");
         }
-        else
-        {
+        if(cabecera== true)
+        {   int k = -1;
             for(int j = indice; j <= indice + 4; j ++)
-            {
+            { k = k + 1;
                 try
                 {
-                    if(data.SymbolsTable[j][2].equals(automata[j]) || (j==(indice + 3)&&data.SymbolsTable[j][2].equals("17")))
+                    if(data.SymbolsTable[j][2].equals(automata[k]) || (j==(indice + 3)&&data.SymbolsTable[j][2].equals("17")))
                     {
                         full = full - 1;
                     }
-                }catch(NullPointerException Ex){Interface.errors.setText("Error en cabeceras");}
+            cabecera = false;
+                }catch(NullPointerException | ArrayIndexOutOfBoundsException excepcion){}
             }
             if(full != 0)
             {
@@ -76,5 +77,5 @@ private Matcher matcher;
             } 
         }
     }
-    
+  }
 }
