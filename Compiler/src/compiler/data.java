@@ -33,8 +33,8 @@ public class data {
                                            {"*","12"},
                                            {"/","13"},
                                            {";","14"},
-                                           {"=","31"}, //agregue simbolos
-                                           {"!","32"}
+                                           {"=","31"},
+                                           {"!","32"}// agregue simbolos 
                                           };
     
     public String dictionaryWReser[][] = {
