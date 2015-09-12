@@ -153,28 +153,7 @@ private int indice_errores = -1;
         }
     }
     
-    public void While(){
-        int full = 3;
-        int indice = 0;
-        boolean While = false;
-        String automata[] = {"21", "2", "3"};
-        
-        for(int i = 0; i < data.count_symbols; i ++)
-        {
-            try{
-                if(data.SymbolsTable[i][2].equals("21"))
-                {
-                    full = 3;
-                    indice = i;
-                    While = true;
-                }
-            }catch(NullPointerException ex){}
-            if(While == true && data.SymbolsTable[indice + 1][2].equals("2"))
-            {
-                
-            }
-        }
-    }
+    
     
     public void print_errors(){
         String texto_errores="";
