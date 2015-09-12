@@ -153,7 +153,7 @@ private int indice_errores = -1;
         }
     }
     public void automataIf(){
-    
+    int i=0;
     }
     public void print_errors(){
         String texto_errores="";
