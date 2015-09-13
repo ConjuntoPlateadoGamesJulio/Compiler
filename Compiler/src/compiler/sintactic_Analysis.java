@@ -228,81 +228,72 @@ private int indice_errores = -1;
     }
     
     public void automataIf(){
-        int indice=0,i;
-        boolean entra=false;
-        boolean fin=false;
+        int full = 0;
+        int indice = 0;
+        boolean entra = false;
+        boolean operadores = false;
+        boolean fin = false;
+        String automata[] = {"32", "4", "5", "31"};
         
-            for(i=0;i<data.count_symbols;i++){
+        for(int i = 0; i < data.count_symbols; i ++)
+        {
             try{
-                    if(data.SymbolsTable[i][2].equals("23"))
-                    {entra=true;
-                     indice=i+1;
-                    }
-                
-                    if(entra==true){
-
-                    JOptionPane.showMessageDialog(null, data.SymbolsTable[indice][0]);
-                    if(data.SymbolsTable[indice][2].equals("2")){//simbolo (
-                        // JOptionPane.showMessageDialog(null, " 2");
-                        indice+=1;
-                        if(data.SymbolsTable[indice][1].equals("variable")
-                            || data.SymbolsTable[indice][1].equals("numero")){//valida variables o numeros
-                            indice+=1;
-                            //JOptionPane.showMessageDialog(null, "if ");
-                            if(data.SymbolsTable[indice][2].equals("31")       //simbolo de comparacion =
-                                    ||data.SymbolsTable[indice][2].equals("32")){   //simbolo !
-                                indice+=1;
-                                if(data.SymbolsTable[indice][2].equals("31")){ //simbolo de comparacion =
-                                    indice+=1;
-                                    if(data.SymbolsTable[indice][1].equals("variable")
-                                            || data.SymbolsTable[indice][1].equals("numero")){//valida variable o numeros
-                                        indice+=1;
-                                        if(data.SymbolsTable[indice][2].equals("3")){   //simbolo )
-                                            indice+=1;
-                                             // JOptionPane.showMessageDialog(null, "if correcto");
-                                              fin=true;
-                                        }
-                                    }
-                                }
-                            } 
-                            else{
-                                if (data.SymbolsTable[indice][2].equals("4")
-                                        || data.SymbolsTable[indice][2].equals("5")) { // simbolo < >
-                                    indice+=1;
-                                    if(data.SymbolsTable[indice][2].equals("31")){ //simbolo de comparacion =
-                                        indice+=1;
-                                        if(data.SymbolsTable[indice][1].equals("variable")
-                                                || data.SymbolsTable[indice][1].equals("numero")){//valida variable o numeros
-                                            indice+=1;
-                                            if(data.SymbolsTable[indice][2].equals("3")){   //simbolo )
-                                                indice+=1;
-                                                 // JOptionPane.showMessageDialog(null, "if correcto");
-                                                  fin=true;
-                                            }
-                                        }
-
-                                    }
-                                }
-                                else{
-                                     if(data.SymbolsTable[indice][2].equals("3")){   //simbolo ) ejemplo if(var)
-                                                indice+=1;
-                                                 // JOptionPane.showMessageDialog(null, "if correcto");
-                                                  fin=true;
-                                        }
-                                }
+                if(data.SymbolsTable[i][2].equals("23"))
+                {
+                    full = 4;
+                    indice = i;
+                    entra = true;
+                }
+            }catch(NullPointerException ex){}
+            try{
+            if(entra == true && data.SymbolsTable[indice + 1][2].equals("2"))
+            {
+                if(data.SymbolsTable[indice + 2][1].equals("variable")
+                    ||data.SymbolsTable[indice + 2][1].equals("numero"))
+                {
+                    
+                    try{
+                    if(data.SymbolsTable[indice + 4][2].equals("31")&&
+                        data.SymbolsTable[indice + 4][2]!=null)
+                    {
+                        for(int g = 0 ; g < 4; g ++)
+                        {
+                            if(data.SymbolsTable[indice + 3][2].equals(automata[g]))
+                            {
+                                operadores = true;
                             }
-
+                        }
+                        if ((data.SymbolsTable[indice + 5][1].equals("variable") 
+                             || data.SymbolsTable[indice + 5][1].equals("numero")) 
+                                && operadores == true) {
+                            
+                            if (data.SymbolsTable[indice + 6][2].equals("3")) {
+                                fin = true;
+                            }
+                        }
+                    }
+                    }catch(NullPointerException e){}
+                        if(data.SymbolsTable[indice + 3][2].equals("4")
+                            || data.SymbolsTable[indice + 3][2].equals("5"))
+                        {
+                            operadores = true;   
+                        }
+                        if ((data.SymbolsTable[indice + 4][1].equals("variable") 
+                            || data.SymbolsTable[indice + 4][1].equals("numero"))
+                                && operadores == true) {
+                            if (data.SymbolsTable[indice + 5][2].equals("3")) {
+                                fin = true;
+                            }
                         }
                     }
                 }
-            
-             }
-             catch(NullPointerException ex){}
+            }catch(NullPointerException ex){}
         }
-        if(fin!=true){
+        if(fin != true && entra != false)
+            {
                 this.indice_errores = indice_errores + 1;
-                this.errores[indice_errores] = "error if ";
-        }
+                this.errores[indice_errores] = "error en if";
+            }
     }
     
     public void print_errors(){
