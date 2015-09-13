@@ -227,6 +227,84 @@ private int indice_errores = -1;
         }
     }
     
+    public void automataIf(){
+        int indice=0,i;
+        boolean entra=false;
+        boolean fin=false;
+        
+            for(i=0;i<data.count_symbols;i++){
+            try{
+                    if(data.SymbolsTable[i][2].equals("23"))
+                    {entra=true;
+                     indice=i+1;
+                    }
+                
+                    if(entra==true){
+
+                    JOptionPane.showMessageDialog(null, data.SymbolsTable[indice][0]);
+                    if(data.SymbolsTable[indice][2].equals("2")){//simbolo (
+                        // JOptionPane.showMessageDialog(null, " 2");
+                        indice+=1;
+                        if(data.SymbolsTable[indice][1].equals("variable")
+                            || data.SymbolsTable[indice][1].equals("numero")){//valida variables o numeros
+                            indice+=1;
+                            //JOptionPane.showMessageDialog(null, "if ");
+                            if(data.SymbolsTable[indice][2].equals("31")       //simbolo de comparacion =
+                                    ||data.SymbolsTable[indice][2].equals("32")){   //simbolo !
+                                indice+=1;
+                                if(data.SymbolsTable[indice][2].equals("31")){ //simbolo de comparacion =
+                                    indice+=1;
+                                    if(data.SymbolsTable[indice][1].equals("variable")
+                                            || data.SymbolsTable[indice][1].equals("numero")){//valida variable o numeros
+                                        indice+=1;
+                                        if(data.SymbolsTable[indice][2].equals("3")){   //simbolo )
+                                            indice+=1;
+                                             // JOptionPane.showMessageDialog(null, "if correcto");
+                                              fin=true;
+                                        }
+                                    }
+                                }
+                            } 
+                            else{
+                                if (data.SymbolsTable[indice][2].equals("4")
+                                        || data.SymbolsTable[indice][2].equals("5")) { // simbolo < >
+                                    indice+=1;
+                                    if(data.SymbolsTable[indice][2].equals("31")){ //simbolo de comparacion =
+                                        indice+=1;
+                                        if(data.SymbolsTable[indice][1].equals("variable")
+                                                || data.SymbolsTable[indice][1].equals("numero")){//valida variable o numeros
+                                            indice+=1;
+                                            if(data.SymbolsTable[indice][2].equals("3")){   //simbolo )
+                                                indice+=1;
+                                                 // JOptionPane.showMessageDialog(null, "if correcto");
+                                                  fin=true;
+                                            }
+                                        }
+
+                                    }
+                                }
+                                else{
+                                     if(data.SymbolsTable[indice][2].equals("3")){   //simbolo ) ejemplo if(var)
+                                                indice+=1;
+                                                 // JOptionPane.showMessageDialog(null, "if correcto");
+                                                  fin=true;
+                                        }
+                                }
+                            }
+
+                        }
+                    }
+                }
+            
+             }
+             catch(NullPointerException ex){}
+        }
+        if(fin!=true){
+                this.indice_errores = indice_errores + 1;
+                this.errores[indice_errores] = "error if ";
+        }
+    }
+    
     public void print_errors(){
         String texto_errores="";
         for(int j = 0; j <= indice_errores; j ++)
