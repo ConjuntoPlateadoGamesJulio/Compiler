@@ -99,7 +99,7 @@ private int indice_errores = -1;
         String automata[] = {"24", "19", "2", "3"};
         
         for(int i = 0; i < data.count_symbols; i ++)
-        {
+        {full = 0;
             try{
                 if(data.SymbolsTable[i][2].equals("24"))
                 {
@@ -124,8 +124,8 @@ private int indice_errores = -1;
                     }
                 }
             } catch (NullPointerException ex) {}
-        }
-        if(full != 0&&Int == true)
+        }JOptionPane.showMessageDialog(null, ""+full+""+IntMain);
+        if(full != 0 && IntMain == true)
         {        
             this.indice_errores = indice_errores + 1;
             this.errores[indice_errores] = "error en parentesis";
@@ -198,32 +198,27 @@ private int indice_errores = -1;
                 this.indice_errores = indice_errores + 1;
                 this.errores[indice_errores] = "error en ciclo";
             }
-    }
-    
-    public void llaves(){
-        int count_openKeys = 0;
-        int count_closeKeys = 0;
-        
-        try {
-            for (int g = 0; g < data.count_symbols; g++) {
-                try{
-                if (data.SymbolsTable[g][2].equals("8")) 
-                {
-                    count_openKeys = count_openKeys + 1;
-                }
-                }catch(NullPointerException e){}
-                try{
-                if (data.SymbolsTable[g][2].equals("9")) 
-                {
-                    count_closeKeys = count_closeKeys + 1;
-                }
-                }catch(NullPointerException e){}
-            }
-        } catch (NullPointerException e) {}
-        if ((count_openKeys != count_closeKeys) || (count_openKeys + count_closeKeys) == 0) 
+        boolean doWhile = false;
+        boolean dowhile = false;
+        if(completo == true)
         {
-            this.indice_errores = indice_errores + 1;
-            this.errores[indice_errores] = "error en llaves";
+            for(int i = 0; i < data.count_symbols; i ++)
+            {
+                try {
+                    if (data.SymbolsTable[i][2].equals("22")) 
+                    {dowhile = true;
+                        if (data.SymbolsTable[i + 1][2].equals("8") && i < indice) 
+                        {
+                            doWhile = true;
+                        }
+                    }
+                } catch (NullPointerException e) {}
+            }
+            if(doWhile != true && dowhile == true)
+            {
+                this.indice_errores = indice_errores + 1;
+                this.errores[indice_errores] = "error en ciclo";
+            }
         }
     }
     
@@ -296,6 +291,67 @@ private int indice_errores = -1;
             }
     }
     
+    public void Printf(){
+        String automata[] = {"30","2","33","33","3","14"};
+        int indice = 0;
+        int full = 0;
+        
+        for(int i = 0; i < data.count_symbols; i++)
+        {
+            try{
+            if(data.SymbolsTable[i][2].equals("30"))
+            {
+                full = 6;
+                indice = i;
+                break;
+            }
+            }catch(NullPointerException e){}
+        }
+        int k = -1; 
+        for(int i = indice; i <= (indice + 5); i++)
+        {
+            k = k + 1;
+            try{
+                if(data.SymbolsTable[i][2].equals(automata[k]))
+                {
+                    full = full - 1;
+                }
+            }catch(NullPointerException e){}
+        }
+        if(full != 0)
+        {
+            this.indice_errores = indice_errores + 1;
+            this.errores[indice_errores] = "error en printf";
+        }
+    } 
+    
+    public void llaves(){
+        int count_openKeys = 0;
+        int count_closeKeys = 0;
+        
+        try {
+            for (int g = 0; g < data.count_symbols; g++) {
+                try{
+                if (data.SymbolsTable[g][2].equals("8")) 
+                {
+                    count_openKeys = count_openKeys + 1;
+                }
+                }catch(NullPointerException e){}
+                try{
+                if (data.SymbolsTable[g][2].equals("9")) 
+                {
+                    count_closeKeys = count_closeKeys + 1;
+                }
+                }catch(NullPointerException e){}
+            }
+        } catch (NullPointerException e) {}
+        if ((count_openKeys != count_closeKeys) || (count_openKeys + count_closeKeys) == 0) 
+        {
+            this.indice_errores = indice_errores + 1;
+            this.errores[indice_errores] = "error en llaves";
+        }
+    }
+
     public void print_errors(){
         String texto_errores="";
         for(int j = 0; j <= indice_errores; j ++)
