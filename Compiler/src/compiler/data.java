@@ -15,7 +15,7 @@ public class data {
     public int row;
     public int column;
     public int count_symbols;
-    private final int n = 30;
+    private final int n = 33;
     public String [][] SymbolsTable = new String[n][3];
     
     public String dictionarySimbol[][] = {
@@ -34,7 +34,8 @@ public class data {
                                            {"/","13"},
                                            {";","14"},
                                            {"=","31"},
-                                           {"!","32"}
+                                           {"!","32"},
+                                           {",","33"}
                                           };
     
     public String dictionaryWReser[][] = {
@@ -60,7 +61,7 @@ public class data {
         this.row = -1;
         this.column = 0;
         
-        for(int i = 0; i < 30; i ++)
+        for(int i = 0; i < 33; i ++)
         {
             for(int j = 0; j < 3; j ++)
             {
@@ -100,7 +101,7 @@ public class data {
                 this.SymbolsTable[row][column] = "Simbolo";//se escribe el simbolo
                 this.column = this.column + 1;//pasamos a la otra columna
             
-                for(int i = 0; i < 16; i ++)
+                for(int i = 0; i < 17; i ++)
                     {
                         if(dictionarySimbol[i][0].equals(token))//se busca el simbolo
                         {
