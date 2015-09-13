@@ -124,7 +124,7 @@ private int indice_errores = -1;
                     }
                 }
             } catch (NullPointerException ex) {}
-        }JOptionPane.showMessageDialog(null, ""+full+""+IntMain);
+        }
         if(full != 0 && IntMain == true)
         {        
             this.indice_errores = indice_errores + 1;
