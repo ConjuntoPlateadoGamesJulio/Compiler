@@ -325,6 +325,55 @@ private int indice_errores = -1;
         }
     } 
     
+    public void autonomaScanf(){
+        int indice = 0;
+        boolean entra = false;
+        boolean operadores = false;
+        boolean fin = false;
+         boolean datos = false;
+        String tiposDatos[]={"38","39","40","41"};
+        
+            for(int i = 0; i < data.count_symbols; i ++){
+                try{
+                    if(data.SymbolsTable[i][2].equals("42"))
+                    {
+                            indice=i;
+                            entra=true;
+                    }
+                    if(entra == true && data.SymbolsTable[indice+1][2].equals("2")){ //(
+                        if(data.SymbolsTable[indice+2][2].equals("37")){ //"
+                            for(int j=0;j<4;j++){
+                                if(data.SymbolsTable[indice+3][2].equals(tiposDatos[j])){//%d %f %c %s
+                                   datos=true; 
+                                   //JOptionPane.showMessageDialog(null,"sc");
+                                } 
+                            } 
+                                    if (data.SymbolsTable[indice+4][2].equals("37") && datos== true ) { //"
+                                        if(data.SymbolsTable[indice+5][2].equals("34")){//,
+                                          if(data.SymbolsTable[indice+6][2].equals("35")){// &
+                                              if(data.SymbolsTable[indice+7][1].equals("variable") //vaariable numero
+                                                  ||data.SymbolsTable[indice+7][1].equals("numero")){
+                                                  if (data.SymbolsTable[indice+8][2].equals("3")) { //)
+                                                      if (data.SymbolsTable[indice+9][2].equals("14")) { // ;
+                                                          fin=true;
+                                                         // JOptionPane.showMessageDialog(null,"scanf");
+                                                          break;
+                                                      }
+                                                  }
+                                                }
+                                            }
+                                        }
+                                    }
+                        }
+                    }
+                }catch(NullPointerException ex){}
+            }
+            if(fin != true && entra != false)
+            {
+                this.indice_errores = indice_errores + 1;
+                this.errores[indice_errores] = "error en scanf";
+            }
+    }
     public void llaves(){
         int count_openKeys = 0;
         int count_closeKeys = 0;

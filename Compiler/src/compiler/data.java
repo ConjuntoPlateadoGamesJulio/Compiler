@@ -15,7 +15,7 @@ public class data {
     public int row;
     public int column;
     public int count_symbols;
-    private final int n = 30;
+    private final int n = 41;
     public String [][] SymbolsTable = new String[n][3];
     
     public String dictionarySimbol[][] = {
@@ -36,7 +36,10 @@ public class data {
                                            {"=","31"},
                                            {"!","32"},
                                            {"'","33"},
-                                           {",","34"}
+                                           {",","34"},
+                                           {"&","35"},//simbolos que faltaban
+                                           {"%","36"},//apartir de aqui
+                                           {"\"","37"}// y aqui
                                           };
     
     public String dictionaryWReser[][] = {
@@ -54,7 +57,12 @@ public class data {
                                            {"bool","27"},
                                            {"char","28"},
                                            {"String","29"},
-                                           {"printf","30"}
+                                           {"printf","30"},
+                                           {"scanf","42"},
+                                           {"%d","38"}, //agregue esta madre porque
+                                           {"%f","39"}, //%d lo separaba y la d tenia 
+                                           {"%s","40"}, // que estar declarada como
+                                           {"%c","41"} // variable
                                           };
     public String tipos[] = {"24","25","26","27","28","29"};
     
@@ -62,7 +70,7 @@ public class data {
         this.row = -1;
         this.column = 0;
         
-        for(int i = 0; i < 30; i ++)
+        for(int i = 0; i < 41; i ++)
         {
             for(int j = 0; j < 3; j ++)
             {
@@ -85,7 +93,7 @@ public class data {
             this.SymbolsTable[row][column] = "Palabra Reservada";//se escribe palabra reservada
             this.column = this.column + 1;//pasamos a la otra columna
             
-            for(int i = 0; i < 15; i ++)
+            for(int i = 0; i <20; i ++)
             {
                 if(dictionaryWReser[i][0].equals(token))//se busca la palabra reservada
                 {
@@ -102,7 +110,7 @@ public class data {
                 this.SymbolsTable[row][column] = "Simbolo";//se escribe el simbolo
                 this.column = this.column + 1;//pasamos a la otra columna
             
-                for(int i = 0; i < 18; i ++)
+                for(int i = 0; i <21; i ++)
                     {
                         if(dictionarySimbol[i][0].equals(token))//se busca el simbolo
                         {

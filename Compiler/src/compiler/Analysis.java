@@ -50,6 +50,7 @@ public class Analysis implements ActionListener{
             sA.While();
             sA.Printf();
             sA.automataIf();
+            sA.autonomaScanf();
             sA.llaves();
             sA.print_errors();//imprime vector de errores
             
