@@ -130,12 +130,14 @@ public class data {
             {
                 for(int i = 0; i < count_symbols - 1; i ++)
                 {
+                    try{
                     if(SymbolsTable[i][0].equals(token))
                     {
                         this.SymbolsTable[row][column] = token;//inserta el simbolo
                         this.column = this.column + 1;//pasamos a  la otra columna
                         this.SymbolsTable[row][column] = "variable";//se escribe el simbolo
                     }
+                    }catch(NullPointerException e){}
                 }
             }
         }
