@@ -50,9 +50,19 @@ public class Analysis implements ActionListener{
             sA.While();
             sA.Printf();
             sA.automataIf();
+            sA.autonomaScanf();
+            sA.automataFor();
             sA.llaves();
+            sA.semanticPrintf();
             sA.print_errors();//imprime vector de errores
             
+            //Araña :3 chiga a su madre :3
+            sA.Int();
+            sA.Float();
+            sA.Char();
+            sA.Double();
+            sA.Bool();
+            sA.Operaciones();
         }
     }
 }
