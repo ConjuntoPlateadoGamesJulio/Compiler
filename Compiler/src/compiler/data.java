@@ -15,7 +15,7 @@ public class data {
     public int row;
     public int column;
     public int count_symbols;
-    private final int n = 42;
+    private final int n = 100;
     public String [][] SymbolsTable = new String[n][3];
     
     public String [][] SymbolsTableAraña = new String [n][3];
@@ -116,12 +116,15 @@ public class data {
         {
             if(clase.equals("Simbol"))//si es simbolo
             {
+                try{
                 this.SymbolsTable[row][column] = token;//inserta el simbolo
                 this.SymbolsTableAraña[row][column] = token;
                 this.column = this.column + 1;//pasamos a  la otra columna
                 this.SymbolsTable[row][column] = "Simbolo";//se escribe el simbolo
                 this.SymbolsTableAraña[row][column] = "Simbolo";
                 this.column = this.column + 1;//pasamos a la otra columna
+                }
+                catch(ArrayIndexOutOfBoundsException ex){}
             
                 for(int i = 0; i <21; i ++)
                     {
@@ -142,7 +145,7 @@ public class data {
             this.SymbolsTableAraña[row][1] = "Variable";
             this.SymbolsTableAraña[row][2] = "3.1416";
             
-            for(int i = 0; i < 6; i++)
+            for(int i = 0; i < 7; i++)
             {
                 try {
                     if (SymbolsTable[row - 1][column + 2].equals(tipos[i])) 

@@ -19,19 +19,23 @@ public class Analysis implements ActionListener{
     private lexical_Analysis lA;
     private sintactic_Analysis sA;
     private data data;
+    private sA_Int Int;
     
-    public Analysis(Interface Interface, data data, lexical_Analysis lA, sintactic_Analysis sA){
+    public Analysis(Interface Interface, data data, lexical_Analysis lA, sintactic_Analysis sA, sA_Int Int){
         this.Interface = Interface;
         this.data = data;
         this.lA = lA;
         this.sA = sA;
         this.Interface.Start.addActionListener(this);
         this.Interface.jButton2.addActionListener(this);
+        //this.Interface.jButton2.setVisible(false);
+        this.Int = Int;
     }   
 
     @Override
     public void actionPerformed(ActionEvent e) {
         Object boton = e.getSource();
+        //Interface.jButton2.setVisible(false);
         if(boton == Interface.jButton2)
         {
             data.solo_probando();
@@ -43,7 +47,7 @@ public class Analysis implements ActionListener{
             data.setData();
             lA.proccess();
             
-            sA.set_sintactic_Analysis(Interface, data);
+            sA.set_sintactic_Analysis(Interface, data, Int);
             sA.proccess();//borra panel de errores
             sA.cabeceras();
             sA.Main();

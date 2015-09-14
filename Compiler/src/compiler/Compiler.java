@@ -17,12 +17,13 @@ public class Compiler {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        sA_Int Int = new sA_Int();
         Interface Interface = new Interface();
         Interface.setVisible(true);//mostrar ventana
         data data = new data();
         lexical_Analysis lA = new lexical_Analysis();
         sintactic_Analysis sA = new sintactic_Analysis(); 
-        Analysis A = new Analysis(Interface, data, lA, sA);//contructor (inicializador)
+        Analysis A = new Analysis(Interface, data, lA, sA, Int);//contructor (inicializador)
     }
     
 }

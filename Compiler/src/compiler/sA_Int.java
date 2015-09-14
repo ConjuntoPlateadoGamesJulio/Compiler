@@ -19,8 +19,7 @@ public class sA_Int {
     String q;
     String alfabeto = "abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
     String qAux;
-    
-          
+              
     public boolean Estado(String cad){
         cadena = cad;
         Estado0();

@@ -41,9 +41,10 @@ private boolean hayScanf = false;
 
 String cadena;
 
-    public void set_sintactic_Analysis(Interface Interface, data data){
+    public void set_sintactic_Analysis(Interface Interface, data data, sA_Int Int){
         this.Interface = Interface;
         this.data = data;
+        this.Int = Int;
     }
     
     public void proccess(){
@@ -329,6 +330,7 @@ String cadena;
             }catch(NullPointerException e){}
         }
         int k = -1; 
+        
         for(int i = indice; i <= (indice + 5); i++)
         {
             k = k + 1;
@@ -339,7 +341,7 @@ String cadena;
                 }
             }catch(NullPointerException e){}
         }
-        if(full == 0 && printf == true )//++++++++++++++++++++++++++++++++++++++++++
+        if(full == 0 && printf == true )
         {
             this.hayPrintf = true;
         }
@@ -514,6 +516,8 @@ String cadena;
                 }catch(NullPointerException e){}
             }
         } catch (NullPointerException e) {}
+        
+        //JOptionPane.showMessageDialog(null, count_openKeys + " " + count_closeKeys);
         if ((count_openKeys != count_closeKeys) || (count_openKeys + count_closeKeys) == 0) 
         {
             this.indice_errores = indice_errores + 1;
@@ -527,7 +531,6 @@ String cadena;
         boolean banError = false;
         boolean primeravez = true;
         cadena = null;
-        Int = new sA_Int();
         
         for(int i = 0; i<data.count_symbolsAraña; i++){
             try{
@@ -537,42 +540,52 @@ String cadena;
                         banError = true;
                     }
                 }catch(NullPointerException e){}
-           }
-        try{
-            while(!";".equals(data.SymbolsTableAraña[indice][0]) 
-                    && !"float".equals(data.SymbolsTableAraña[indice][0])
-                    && !"char".equals(data.SymbolsTableAraña[indice][0])     
-                    && !"double".equals(data.SymbolsTableAraña[indice][0])
-                    && !"bool".equals(data.SymbolsTableAraña[indice][0])
-                    && !"42".equals(data.SymbolsTableAraña[indice][2])
-                    )
+            if(banError == true)
             {
                 try{
-                cadena = cadena + data.SymbolsTableAraña[indice][0];
-                if(primeravez)
+                    while(!";".equals(data.SymbolsTableAraña[indice][0]) 
+                            && !"float".equals(data.SymbolsTableAraña[indice][0])
+                            && !"char".equals(data.SymbolsTableAraña[indice][0])     
+                            && !"double".equals(data.SymbolsTableAraña[indice][0])
+                            && !"bool".equals(data.SymbolsTableAraña[indice][0])
+                            && !"42".equals(data.SymbolsTableAraña[indice][2])
+                            && !"19".equals(data.SymbolsTableAraña[indice+1][2])
+                            && !"int".equals(data.SymbolsTableAraña[indice+1][0])
+                            )
+                    {
+                        try{
+                        cadena = cadena + data.SymbolsTableAraña[indice][0];
+                        if(primeravez)
+                        {
+                            cadena = cadena.substring(4);
+                            primeravez = false;
+                        }
+                        indice++;
+                        }catch(NullPointerException e){}   
+                    }
+                }catch(ArrayIndexOutOfBoundsException e){}
+
+                try{
+                if(data.SymbolsTableAraña[indice][0].equals(";"))
                 {
-                    cadena = cadena.substring(4);
-                    primeravez = false;
+                   try{
+                    cadena = cadena + ";";
+                    terminado = Int.Estado(cadena);
+                    //JOptionPane.showMessageDialog(null, cadena+ "" + terminado);
+                   }catch(NullPointerException e){}   
                 }
-                indice++;
-                }catch(NullPointerException e){}   
+                }catch(NullPointerException|ArrayIndexOutOfBoundsException e){} 
+                
+                if(terminado == false && banError && cadena != null)
+                    {
+                        Interface.errors.append("Error en declaracion Int: " + cadena + "\n");
+                    }
+                
+                terminado = false;
+                banError = false;
+                primeravez = true;
+                cadena = null;
             }
-        }catch(ArrayIndexOutOfBoundsException e){}
-         
-        try{
-        if(data.SymbolsTableAraña[indice][0].equals(";"))
-        {
-           try{
-            cadena = cadena + ";";
-            terminado = Int.Estado(cadena);
-            //JOptionPane.showMessageDialog(null, terminado);
-           }catch(NullPointerException e){}   
-        }
-        }catch(NullPointerException|ArrayIndexOutOfBoundsException e){}
-        
-        if(terminado == false && banError)
-        {
-            Interface.errors.append("Error en declaracion Int\n");
         }
     }
     
@@ -582,9 +595,9 @@ String cadena;
         boolean banError = false;
         boolean primeravez = true;
         cadena = null;
-        Float = new sA_Float();
         
         for(int i = 0; i<data.count_symbolsAraña; i++){
+            Float = new sA_Float();
             try{
                 if(data.SymbolsTableAraña[i][2].equals("25"))
                     {
@@ -592,41 +605,49 @@ String cadena;
                         banError = true;
                     }
                 }catch(NullPointerException e){}
-           }
-        try{
-            while(!";".equals(data.SymbolsTableAraña[indice][0]) 
-                    && !"int".equals(data.SymbolsTableAraña[indice][0])
-                    && !"char".equals(data.SymbolsTableAraña[indice][0])     
-                    && !"double".equals(data.SymbolsTableAraña[indice][0])
-                    && !"bool".equals(data.SymbolsTableAraña[indice][0])
-                    && !"42".equals(data.SymbolsTableAraña[indice][2])
-                    )
-            {
+            if( banError == true){
                 try{
-                cadena = cadena + data.SymbolsTableAraña[indice][0];
-                if(primeravez)
+                    while(!";".equals(data.SymbolsTableAraña[indice][0]) 
+                            && !"int".equals(data.SymbolsTableAraña[indice][0])
+                            && !"char".equals(data.SymbolsTableAraña[indice][0])     
+                            && !"double".equals(data.SymbolsTableAraña[indice][0])
+                            && !"bool".equals(data.SymbolsTableAraña[indice][0])
+                            && !"float".equals(data.SymbolsTableAraña[indice+1][0])
+                            && !"42".equals(data.SymbolsTableAraña[indice][2])
+                            )
+                    {
+                        try{
+                        cadena = cadena + data.SymbolsTableAraña[indice][0];
+                        if(primeravez)
+                        {
+                            cadena = cadena.substring(4);
+                            primeravez = false;
+                        }
+                        indice++;
+                        }catch(NullPointerException e){} 
+                    }
+                }catch(ArrayIndexOutOfBoundsException e){}
+
+                try{
+                if(data.SymbolsTableAraña[indice][0].equals(";") && banError)
                 {
-                    cadena = cadena.substring(4);
-                    primeravez = false;
+                   try{
+                    cadena = cadena + ";";
+                    terminado = Float.Estado(cadena);
+                   }catch(NullPointerException e){}   
                 }
-                indice++;
-                }catch(NullPointerException e){} 
-            }
-        }catch(ArrayIndexOutOfBoundsException e){}
-         
-        try{
-        if(data.SymbolsTableAraña[indice][0].equals(";") && banError)
-        {
-           try{
-            cadena = cadena + ";";
-            terminado = Float.Estado(cadena);
-           }catch(NullPointerException e){}   
-        }
-        }catch(ArrayIndexOutOfBoundsException e){}
-        
-        if(terminado == false && banError)
-        {
-            Interface.errors.append("Error en declaracion Float\n");
+                }catch(NullPointerException|ArrayIndexOutOfBoundsException e){}
+
+                if(terminado == false && banError && cadena != null)
+                    {
+                        Interface.errors.append("Error en declaracion Float: " + cadena + "\n");
+                    }
+                
+                terminado = false;
+                banError = false;
+                primeravez = true;
+                cadena = null;
+            }    
         }
     }
     
@@ -690,51 +711,60 @@ String cadena;
         boolean banError = false;
         boolean primeravez = true;
         cadena = null;
-        Double = new sA_Double();
         
         for(int i = 0; i<data.count_symbolsAraña; i++){
+            Double = new sA_Double();    
             try{
-                if(data.SymbolsTableAraña[i][2].equals("26"))
-                    {
-                        indice = i;
-                        banError = true;
-                    }
-                }catch(NullPointerException e){}
-           }
-        try{
-            while(!";".equals(data.SymbolsTableAraña[indice][0]) 
-                    && !"float".equals(data.SymbolsTableAraña[indice][0])
-                    && !"char".equals(data.SymbolsTableAraña[indice][0])     
-                    && !"int".equals(data.SymbolsTableAraña[indice][0])
-                    && !"bool".equals(data.SymbolsTableAraña[indice][0])
-                    && !"42".equals(data.SymbolsTableAraña[indice][2])
-                    )
-            {
+                    if(data.SymbolsTableAraña[i][2].equals("26"))
+                        {
+                            indice = i;
+                            banError = true;
+                        }
+                    }catch(NullPointerException e){}
+            
+            if(banError == true){    
                 try{
-                cadena = cadena + data.SymbolsTableAraña[indice][0];
-                if(primeravez)
+                    while(!";".equals(data.SymbolsTableAraña[indice][0]) 
+                            && !"float".equals(data.SymbolsTableAraña[indice][0])
+                            && !"char".equals(data.SymbolsTableAraña[indice][0])     
+                            && !"int".equals(data.SymbolsTableAraña[indice][0])
+                            && !"bool".equals(data.SymbolsTableAraña[indice][0])
+                            && !"42".equals(data.SymbolsTableAraña[indice][2])
+                            && !"double".equals(data.SymbolsTableAraña[indice+1][0])
+                            )
+                    {
+                        try{
+                        cadena = cadena + data.SymbolsTableAraña[indice][0];
+                        if(primeravez)
+                        {
+                            cadena = cadena.substring(4);
+                            primeravez = false;
+                        }
+                        indice++;
+                        }catch(NullPointerException e){}   
+                    }
+                }catch(ArrayIndexOutOfBoundsException e){}
+
+                try{
+                if(data.SymbolsTableAraña[indice][0].equals(";") && banError)
                 {
-                    cadena = cadena.substring(4);
-                    primeravez = false;
+                   try{
+                    cadena = cadena + ";";
+                    terminado = Double.Estado(cadena);
+                   }catch(NullPointerException e){}   
                 }
-                indice++;
-                }catch(NullPointerException e){}   
-            }
-        }catch(ArrayIndexOutOfBoundsException e){}
-         
-        try{
-        if(data.SymbolsTableAraña[indice][0].equals(";") && banError)
-        {
-           try{
-            cadena = cadena + ";";
-            terminado = Double.Estado(cadena);
-           }catch(NullPointerException e){}   
-        }
-        }catch(ArrayIndexOutOfBoundsException e){}
-        
-        if(terminado == false && banError)
-        {
-            Interface.errors.append("Error en declaracion Double\n");
+                }catch(ArrayIndexOutOfBoundsException e){}
+
+                if(terminado == false && banError && cadena != null)
+                {
+                    Interface.errors.append("Error en declaracion Double: " + cadena + "\n");
+                }   
+                
+                terminado = false;
+                banError = false;
+                primeravez = true;
+                cadena = null;
+            }    
         }
     }
     
@@ -744,9 +774,9 @@ String cadena;
         boolean banError = false;
         boolean primeravez = true;
         cadena = null;
-        Bool = new sA_Bool();
-        
+                
         for(int i = 0; i<data.count_symbolsAraña; i++){
+            Bool = new sA_Bool();
             try{
                 if(data.SymbolsTableAraña[i][2].equals("27"))
                     {
@@ -754,42 +784,51 @@ String cadena;
                         banError = true;
                     }
                 }catch(NullPointerException e){}
-           }
-        try{
-            while(!";".equals(data.SymbolsTableAraña[indice][0]) 
-                    && !"float".equals(data.SymbolsTableAraña[indice][0])
-                    && !"char".equals(data.SymbolsTableAraña[indice][0])     
-                    && !"int".equals(data.SymbolsTableAraña[indice][0])
-                    && !"double".equals(data.SymbolsTableAraña[indice][0])
-                    && !"42".equals(data.SymbolsTableAraña[indice][2])
-                    )
-            {
+           
+            if(banError == true){
                 try{
-                cadena = cadena + data.SymbolsTableAraña[indice][0];
-                if(primeravez)
+                    while(!";".equals(data.SymbolsTableAraña[indice][0]) 
+                            && !"float".equals(data.SymbolsTableAraña[indice][0])
+                            && !"char".equals(data.SymbolsTableAraña[indice][0])     
+                            && !"int".equals(data.SymbolsTableAraña[indice][0])
+                            && !"double".equals(data.SymbolsTableAraña[indice][0])
+                            && !"42".equals(data.SymbolsTableAraña[indice][2])
+                            && !"bool".equals(data.SymbolsTableAraña[indice+1][0])
+                            )
+                    {
+                        try{
+                        cadena = cadena + data.SymbolsTableAraña[indice][0];
+                        if(primeravez)
+                        {
+                            cadena = cadena.substring(4);
+                            primeravez = false;
+                        }
+                        indice++;
+                        }catch(NullPointerException e){}   
+                    }
+                }catch(ArrayIndexOutOfBoundsException e){}
+
+                try{
+                if(data.SymbolsTableAraña[indice][0].equals(";") && banError)
                 {
-                    cadena = cadena.substring(4);
-                    primeravez = false;
+                   try{
+                    cadena = cadena + ";";
+                    terminado = Bool.Estado(cadena);
+                   }catch(NullPointerException e){}   
                 }
-                indice++;
-                }catch(NullPointerException e){}   
+                }catch(ArrayIndexOutOfBoundsException e){}
+
+                if(terminado == false && banError && cadena != null)
+                {
+                    Interface.errors.append("Error en declaracion Bool: " + cadena + "\n");
+                }   
+                
+                terminado = false;
+                banError = false;
+                primeravez = true;
+                cadena = null;
             }
-        }catch(ArrayIndexOutOfBoundsException e){}
-         
-        try{
-        if(data.SymbolsTableAraña[indice][0].equals(";") && banError)
-        {
-           try{
-            cadena = cadena + ";";
-            terminado = Bool.Estado(cadena);
-           }catch(NullPointerException e){}   
-        }
-        }catch(ArrayIndexOutOfBoundsException e){}
-        
-        if(terminado == false && banError)
-        {
-            Interface.errors.append("Error en declaracion Bool\n");
-        }
+        }    
     }
     
     public void Operaciones(){
@@ -798,48 +837,62 @@ String cadena;
         boolean banError = false;
         boolean primeravez = true;
         cadena = null;
-        Oper = new sA_Operaciones();
         
         for(int i = 0; i<data.count_symbolsAraña; i++){
+            Oper = new sA_Operaciones();
             try{
                 if(data.SymbolsTableAraña[i][2].equals("42"))
                     {
                         indice = i;
                         banError = true;
-                        break;
                     }
                 }catch(ArrayIndexOutOfBoundsException|NullPointerException e){}
-           }
-        try{
-            while(!";".equals(data.SymbolsTableAraña[indice][0]))
-            {
+           
+            if(banError == true){
                 try{
-               // JOptionPane.showMessageDialog(null, data.SymbolsTableAraña[indice][0]);
-                cadena = cadena + data.SymbolsTableAraña[indice+1][0];
-                if(primeravez)
+                    while(!";".equals(data.SymbolsTableAraña[indice][0])
+                            && !"float".equals(data.SymbolsTableAraña[indice][0])
+                            && !"char".equals(data.SymbolsTableAraña[indice][0])     
+                            && !"int".equals(data.SymbolsTableAraña[indice][0])
+                            && !"double".equals(data.SymbolsTableAraña[indice][0])
+                            && !"42".equals(data.SymbolsTableAraña[indice+1][2])
+                            && !"bool".equals(data.SymbolsTableAraña[indice+1][0])
+                            )
+                    {
+                        try{
+                       // JOptionPane.showMessageDialog(null, data.SymbolsTableAraña[indice][0]);
+                        cadena = cadena + data.SymbolsTableAraña[indice+1][0];
+                        if(primeravez)
+                        {
+                            cadena = cadena.substring(4);
+                            primeravez = false;
+                        }
+                        indice++;
+                        }catch(NullPointerException e){}   
+                    }
+                }catch(ArrayIndexOutOfBoundsException e){}
+
+                try{
+                if(data.SymbolsTableAraña[indice][0].equals(";") && banError)
                 {
-                    cadena = cadena.substring(4);
-                    primeravez = false;
+                   try{
+                    terminado = Oper.Estado(cadena);
+                    //JOptionPane.showMessageDialog(null, terminado);
+                   }catch(NullPointerException e){}   
                 }
-                indice++;
-                }catch(NullPointerException e){}   
-            }
-        }catch(ArrayIndexOutOfBoundsException e){}
-         
-        try{
-        if(data.SymbolsTableAraña[indice][0].equals(";") && banError)
-        {
-           try{
-            terminado = Oper.Estado(cadena);
-            //JOptionPane.showMessageDialog(null, terminado);
-           }catch(NullPointerException e){}   
-        }
-        }
-        catch(ArrayIndexOutOfBoundsException| NullPointerException e){}
-      
-        if(terminado == false && banError)
-        {
-            Interface.errors.append("Error en la operacion\n");
+                }
+                catch(ArrayIndexOutOfBoundsException| NullPointerException e){}
+
+                if(terminado == false && banError && cadena != null)
+                {
+                    Interface.errors.append("Error en operacion: " + cadena + "\n");
+                }   
+                
+                terminado = false;
+                banError = false;
+                primeravez = true;
+                cadena = null;
+            }    
         }
     }
 
