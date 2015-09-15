@@ -14,12 +14,12 @@ import java.util.regex.Pattern;
  * @author Diego Olayo
  */
 public class lexical_Analysis {
-private Interface Interface;
-private data data;
+    private Interface Interface;
+    private data data;
 
-private String patron = ("(include|stdio.h|stdlib.h|main|for|while|double|if|int|float|do|bool|char|String|cout|printf|scanf|%d|%f|%c|%s|ope:)|"//palabras reservadas
+    private String patron = ("(include|stdio.h|stdlib.h|main|for|while|double|if|int|float|do|bool|char|String|cout|printf)|"//palabras reservadas
                             + "([a-zA-Z]+)|"//variables
-                            + "([#|(|)|<|>|[|]|{|}|+|-|*|/|;|=|'|,|.|&|%|\"]+)|"//simbolos
+                            + "([#|(|)|<|>|[|]|{|}|+|-|*|/|;|=|'|,]+)|"//simbolos
                             + "([0-9]+)");//numeros
 
     public void set_lexical_Analysis(Interface Interface, data data){
@@ -28,7 +28,7 @@ private String patron = ("(include|stdio.h|stdlib.h|main|for|while|double|if|int
     }
     
     public void proccess(){
-            String codigo = Interface.jTextArea2.getText();
+            String codigo = Interface.Codigo.getText();
             Pattern pattern = Pattern.compile(patron);
             Matcher matcher = pattern.matcher(codigo);
 
