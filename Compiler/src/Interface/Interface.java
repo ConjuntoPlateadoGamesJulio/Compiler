@@ -27,6 +27,8 @@ public class Interface extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonTransluceIcon1 = new org.edisoncor.gui.button.ButtonTransluceIcon();
+        buttonSeven1 = new org.edisoncor.gui.button.ButtonSeven();
         panel3 = new org.edisoncor.gui.panel.Panel();
         panel2 = new org.edisoncor.gui.panel.Panel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -34,6 +36,10 @@ public class Interface extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         Errores = new javax.swing.JTextArea();
         PROBANDO = new javax.swing.JButton();
+
+        buttonTransluceIcon1.setText("buttonTransluceIcon1");
+
+        buttonSeven1.setText("buttonSeven1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,7 +61,7 @@ public class Interface extends javax.swing.JFrame {
             panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -84,7 +90,7 @@ public class Interface extends javax.swing.JFrame {
         panel3Layout.setVerticalGroup(
             panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel3Layout.createSequentialGroup()
-                .addGap(13, 13, 13)
+                .addGap(34, 34, 34)
                 .addComponent(PROBANDO)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -146,6 +152,8 @@ public class Interface extends javax.swing.JFrame {
     public javax.swing.JTextArea Codigo;
     public javax.swing.JTextArea Errores;
     public javax.swing.JButton PROBANDO;
+    private org.edisoncor.gui.button.ButtonSeven buttonSeven1;
+    private org.edisoncor.gui.button.ButtonTransluceIcon buttonTransluceIcon1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private org.edisoncor.gui.panel.Panel panel2;
