@@ -319,37 +319,39 @@ public class sintactic_Analysis {
         }
     }
     
-    /*
     public void Int(){
         int indice = 0;
         boolean terminado = false;
+        boolean banEncontrado = false;
         boolean banError = false;
         boolean primeravez = true;
         String cadena = null;
         
-        for(int i = 0; i<data.count_symbolsAraña; i++){
+        for(int i = 0; i<data.count_symbols; i++){
             try{
-                if(data.SymbolsTableAraña[i][2].equals("24"))
+                if(data.SymbolsTable[i][2].equals("24"))
                     {
                         indice = i;
-                        banError = true;
+                        banEncontrado = true;
                     }
                 }catch(NullPointerException e){}
-            if(banError == true)
-            {
+            
+            if(banEncontrado == true)
+            {                
                 try{
-                    while(!";".equals(data.SymbolsTableAraña[indice][0]) 
-                            && !"float".equals(data.SymbolsTableAraña[indice][0])
-                            && !"char".equals(data.SymbolsTableAraña[indice][0])     
-                            && !"double".equals(data.SymbolsTableAraña[indice][0])
-                            && !"bool".equals(data.SymbolsTableAraña[indice][0])
-                            && !"42".equals(data.SymbolsTableAraña[indice][2])
-                            && !"19".equals(data.SymbolsTableAraña[indice+1][2])
-                            && !"int".equals(data.SymbolsTableAraña[indice+1][0])
+                    while(!";".equals(data.SymbolsTable[indice][0]) 
+                            && !"float".equals(data.SymbolsTable[indice][0])
+                            && !"char".equals(data.SymbolsTable[indice][0])     
+                            && !"double".equals(data.SymbolsTable[indice][0])
+                            && !"bool".equals(data.SymbolsTable[indice][0])
+                            && !"42".equals(data.SymbolsTable[indice][2])
+                            && !"19".equals(data.SymbolsTable[indice+1][2])
+                            && !"int".equals(data.SymbolsTable[indice+1][0])
                             )
                     {
+                        banError = true;
                         try{
-                        cadena = cadena + data.SymbolsTableAraña[indice][0];
+                        cadena = cadena + data.SymbolsTable[indice][0];
                         if(primeravez)
                         {
                             cadena = cadena.substring(4);
@@ -361,27 +363,28 @@ public class sintactic_Analysis {
                 }catch(ArrayIndexOutOfBoundsException e){}
 
                 try{
-                if(data.SymbolsTableAraña[indice][0].equals(";"))
+                if(data.SymbolsTable[indice][0].equals(";"))
                 {
                    try{
                     cadena = cadena + ";";
                     terminado = Int.Estado(cadena);
-                    //JOptionPane.showMessageDialog(null, cadena+ "" + terminado);
+                    JOptionPane.showMessageDialog(null, cadena+ "" + terminado);
                    }catch(NullPointerException e){}   
                 }
                 }catch(NullPointerException|ArrayIndexOutOfBoundsException e){} 
                 
-                if(terminado == false && banError && cadena != null)
+                if(terminado == false && banEncontrado && banError)
                     {
-                        Interface.Errores.append("Error en declaracion Int: " + cadena + "\n");
+                        JOptionPane.showMessageDialog(null, banEncontrado+ "Por que entra  no mamar" + terminado);
+                        this.indice_errores = indice_errores + 1;
+                        this.errores[indice_errores] = "Error en Int";
                     }
                 
                 terminado = false;
-                banError = false;
+                banEncontrado = false;
                 primeravez = true;
                 cadena = null;
             }
         }
     }
-*/
 }

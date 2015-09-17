@@ -46,6 +46,7 @@ public class Analysis implements ActionListener {
         sA.While();//evalua el ciclo While y do-While
         sA.automataIf();
         sA.automataElse();
+        sA.Int();
         //IMRPIME TABLA DE SIMBOLOS Y MUESTRA ERRORES
         sA.print_errors();
         data.solo_probando();

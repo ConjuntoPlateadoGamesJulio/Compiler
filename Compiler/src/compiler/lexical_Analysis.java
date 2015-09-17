@@ -19,7 +19,7 @@ public class lexical_Analysis {
 
     private String patron = ("(include|stdio.h|stdlib.h|main|for|while|double|if|int|float|do|bool|char|String|cout|printf|else)|"//palabras reservadas
                             + "([a-zA-Z]+)|"//variables
-                            + "([#|(|)|<|>|[|]|{|}|+|-|*|/|;|=|'|,]+)|"//simbolos
+                            + "([#|(|)|<|>|[|]|{|}|+|-|*|/|;|=|'|,|.]+)|"//simbolos
                             + "([0-9]+)");//numeros
 
     public void set_lexical_Analysis(Interface Interface, data data){

@@ -36,7 +36,8 @@ public class data {
                                            {"=","31"},
                                            {"!","32"},
                                            {"'","33"},
-                                           {",","34"}
+                                           {",","34"},
+                                           {".","36"}
                                           };
     
     public String dictionaryWReser[][] = {
@@ -102,7 +103,7 @@ public class data {
             this.SymbolsTable[row][column] = "Simbolo";//se escribe el simbolo
             this.column = this.column + 1;//pasamos a la otra columna
             
-            for(int i = 0; i < 18; i ++)
+            for(int i = 0; i < 19; i ++)
                 {
                     if(dictionarySimbol[i][0].equals(token))//se busca el simbolo
                     {
@@ -169,7 +170,7 @@ public class data {
     public void solo_probando(){
         System.out.println("TABLA DE SIMBOLOS");
         System.out.println("Token\tClase\tTipo");
-        for(int i= 0; i<=count_symbols;i++)
+        for(int i= 0; i<count_symbols;i++)
         {
             for(int j = 0; j<3; j++)
             {
