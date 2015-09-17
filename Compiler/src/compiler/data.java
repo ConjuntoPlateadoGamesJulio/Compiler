@@ -36,7 +36,8 @@ public class data {
                                            {"=","31"},
                                            {"!","32"},
                                            {"'","33"},
-                                           {",","34"}
+                                           {",","34"},
+                                           {".","36"}
                                           };
     
     public String dictionaryWReser[][] = {
@@ -54,7 +55,8 @@ public class data {
                                            {"bool","27"},
                                            {"char","28"},
                                            {"String","29"},
-                                           {"printf","30"}
+                                           {"printf","30"},
+                                           {"else","35"}
                                           };
     public String tipos[] = {"24","25","26","27","28","29"};
     
@@ -62,7 +64,7 @@ public class data {
         this.row = -1;
         this.column = 0;
         
-        for(int i = 0; i < 30; i ++)
+        for(int i = 0; i < 300; i ++)
         {
             for(int j = 0; j < 3; j ++)
             {
@@ -84,7 +86,7 @@ public class data {
             this.SymbolsTable[row][column] = "Palabra Reservada";//se escribe palabra reservada
             this.column = this.column + 1;//pasamos a la otra columna
             
-            for(int i = 0; i < 15; i ++)
+            for(int i = 0; i < 16; i ++)
             {
                 if(dictionaryWReser[i][0].equals(token))//se busca la palabra reservada
                 {
@@ -101,7 +103,7 @@ public class data {
             this.SymbolsTable[row][column] = "Simbolo";//se escribe el simbolo
             this.column = this.column + 1;//pasamos a la otra columna
             
-            for(int i = 0; i < 18; i ++)
+            for(int i = 0; i < 19; i ++)
                 {
                     if(dictionarySimbol[i][0].equals(token))//se busca el simbolo
                     {
@@ -160,6 +162,7 @@ public class data {
             this.SymbolsTable[row][column] = token;//inserta el simbolo
             this.column = this.column + 1;//pasamos a  la otra columna
             this.SymbolsTable[row][column] = "numero";//tipo
+            this.count_symbols=count_symbols + 1;
         }
         
     }
@@ -167,7 +170,7 @@ public class data {
     public void solo_probando(){
         System.out.println("TABLA DE SIMBOLOS");
         System.out.println("Token\tClase\tTipo");
-        for(int i= 0; i<=count_symbols;i++)
+        for(int i= 0; i<count_symbols;i++)
         {
             for(int j = 0; j<3; j++)
             {
@@ -176,4 +179,5 @@ public class data {
             System.out.print("\n");
         }
     }
+    
 }
