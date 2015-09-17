@@ -17,7 +17,7 @@ public class lexical_Analysis {
     private Interface Interface;
     private data data;
 
-    private String patron = ("(include|stdio.h|stdlib.h|main|for|while|double|if|int|float|do|bool|char|String|cout|printf)|"//palabras reservadas
+    private String patron = ("(include|stdio.h|stdlib.h|main|for|while|double|if|int|float|do|bool|char|String|cout|printf|else)|"//palabras reservadas
                             + "([a-zA-Z]+)|"//variables
                             + "([#|(|)|<|>|[|]|{|}|+|-|*|/|;|=|'|,]+)|"//simbolos
                             + "([0-9]+)");//numeros

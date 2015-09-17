@@ -21,13 +21,15 @@ public class Analysis implements ActionListener {
     private lexical_Analysis lA;
     private sintactic_Analysis sA;
     private data data;
+    private sA_Int Int;
 
-    public Analysis(Interface Interface, data data, lexical_Analysis lA, sintactic_Analysis sA) {
+    public Analysis(Interface Interface, data data, lexical_Analysis lA, sintactic_Analysis sA, sA_Int Int) {
         this.Interface = Interface;
         this.data = data;
         this.lA = lA;
         this.sA = sA;
         this.Interface.PROBANDO.addActionListener(this);
+        this.Int = Int;
     }
 
     @Override
@@ -38,11 +40,12 @@ public class Analysis implements ActionListener {
         lA.proccess();//mete todo a la tabla de simbolos
         
         //ANALISIS SINTACTICO
-        sA.setSintacticAnalysis(Interface, data);//constructor
+        sA.setSintacticAnalysis(Interface, data, Int);//constructor
         sA.inicializar_y_limpiar();//inicializa y borra el panel de errores
         sA.cabeceras();//evalua las librerias
         sA.While();//evalua el ciclo While y do-While
-        
+        sA.automataIf();
+        sA.automataElse();
         //IMRPIME TABLA DE SIMBOLOS Y MUESTRA ERRORES
         sA.print_errors();
         data.solo_probando();
