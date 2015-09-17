@@ -6,6 +6,8 @@
 package compiler;
 
 import Interface.Interface;
+import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -101,7 +103,109 @@ public class sintactic_Analysis {
             this.indice_errores = indice_errores + 1;
             this.errores[indice_errores] = "No hay cabecera o librerias";
         }
-    }
-     
+    } 
     
+     public void While(){
+        int full = 0;
+        int indice = 0; 
+        boolean While = false;
+        boolean operadores = false;
+        boolean completo = false;
+        boolean hayComa = false;
+        String automata[] = {"32", "4", "5", "31"};
+        
+        for(int i = 0; i < data.count_symbols; i ++)
+        {
+            While = false;
+            try{
+                if(data.SymbolsTable[i][2].equals("21"))
+                {
+                    hayComa = false;
+                    full = 4;
+                    indice = i;
+                    operadores = false;
+                    completo = false;
+                    While = true;
+                }
+            }catch(NullPointerException ex){}
+            try{
+            if(While == true && data.SymbolsTable[indice + 1][2].equals("2"))
+            {
+                if(data.SymbolsTable[indice + 2][1].equals("variable")||data.SymbolsTable[indice + 2][1].equals("numero"))
+                {
+                    
+                    try{
+                    if(data.SymbolsTable[indice + 4][2].equals("31")&&data.SymbolsTable[indice + 4][2]!=null)
+                    {
+                        for(int g = 0 ; g < 4; g ++)
+                        {
+                            if(data.SymbolsTable[indice + 3][2].equals(automata[g]))
+                            {
+                                operadores = true;
+                            }
+                        }
+                        if ((data.SymbolsTable[indice + 5][1].equals("variable") || data.SymbolsTable[indice + 5][1].equals("numero")) && operadores == true) {
+                            if (data.SymbolsTable[indice + 6][2].equals("3")) {
+                                completo = true;
+                            }
+                        }
+                    }
+                    }catch(NullPointerException e){}
+                        if(data.SymbolsTable[indice + 3][2].equals("4") || data.SymbolsTable[indice + 3][2].equals("5"))
+                        {
+                            operadores = true;   
+                        }
+                        if ((data.SymbolsTable[indice + 4][1].equals("variable") || data.SymbolsTable[indice + 4][1].equals("numero")) && operadores == true) {
+                            if (data.SymbolsTable[indice + 5][2].equals("3")&&(data.SymbolsTable[indice + 6][2].equals("8")||data.SymbolsTable[indice + 6][2].equals("14"))) {
+                                completo = true;
+                                if(data.SymbolsTable[indice + 6][2].equals("14"))
+                                {
+                                    hayComa = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }catch(NullPointerException ex){}
+        if(completo != true && While != false)
+            {
+                this.indice_errores = indice_errores + 1;
+                this.errores[indice_errores] = "error en ciclo";
+            }
+
+        boolean doWhile = false;
+        boolean dowhile = false;
+        if(completo == true)
+        {
+            for(int f = 0; f < data.count_symbols; f ++)
+            {
+                try {
+                    if (data.SymbolsTable[f][2].equals("22")) 
+                    {
+                        dowhile = true;
+                        if (data.SymbolsTable[f + 1][2].equals("8") && f < indice) 
+                        {
+                            doWhile = true;
+                        }
+                    }
+                } catch (NullPointerException e) {}
+            }
+            if(While == true && doWhile != true && dowhile == true)
+            {
+                this.indice_errores = indice_errores + 1;
+                this.errores[indice_errores] = "error en ciclo";
+            }
+            if(While == true && dowhile == false && hayComa == true)
+            {
+                this.indice_errores = indice_errores + 1;
+                this.errores[indice_errores] = "while tiene punto y coma";
+            }
+            if(While == true && dowhile == true && doWhile == true && hayComa == false)
+            {
+                this.indice_errores = indice_errores + 1;
+                this.errores[indice_errores] = "do-while sin punto y coma"; 
+            }
+        }
+      }
+    }
 }

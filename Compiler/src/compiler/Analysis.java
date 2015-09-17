@@ -41,6 +41,7 @@ public class Analysis implements ActionListener {
         sA.setSintacticAnalysis(Interface, data);//constructor
         sA.inicializar_y_limpiar();//inicializa y borra el panel de errores
         sA.cabeceras();//evalua las librerias
+        sA.While();//evalua el ciclo While y do-While
         
         //IMRPIME TABLA DE SIMBOLOS Y MUESTRA ERRORES
         sA.print_errors();

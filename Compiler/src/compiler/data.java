@@ -5,6 +5,8 @@
  */
 package compiler;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Diego Olayo
@@ -13,7 +15,7 @@ public class data {
     public int row;
     public int column;
     public int count_symbols;
-    private final int n = 30;
+    private final int n = 10000;
     public String [][] SymbolsTable = new String[n][3];
     
     public String dictionarySimbol[][] = {
@@ -74,7 +76,6 @@ public class data {
         //cada vez que entra
         this.row = this.row + 1;//la fila aumenta
         this.column = 0;//columna cero
-        this.count_symbols = count_symbols + 1;
         
         if(clase.equals("WR"))//si es una palabra reservada
         {
@@ -90,30 +91,31 @@ public class data {
                     this.SymbolsTable[row][column] = dictionaryWReser[i][1];//se escribe el valor de la palabra reservada
                 }
             }
+            this.count_symbols = count_symbols + 1;//se inserto un simbolo
         }
-        else
+
+        if(clase.equals("Simbol"))//si es simbolo
         {
-            if(clase.equals("Simbol"))//si es simbolo
-            {
-                this.SymbolsTable[row][column] = token;//inserta el simbolo
-                this.column = this.column + 1;//pasamos a  la otra columna
-                this.SymbolsTable[row][column] = "Simbolo";//se escribe el simbolo
-                this.column = this.column + 1;//pasamos a la otra columna
+            this.SymbolsTable[row][column] = token;//inserta el simbolo
+            this.column = this.column + 1;//pasamos a  la otra columna
+            this.SymbolsTable[row][column] = "Simbolo";//se escribe el simbolo
+            this.column = this.column + 1;//pasamos a la otra columna
             
-                for(int i = 0; i < 18; i ++)
+            for(int i = 0; i < 18; i ++)
+                {
+                    if(dictionarySimbol[i][0].equals(token))//se busca el simbolo
                     {
-                        if(dictionarySimbol[i][0].equals(token))//se busca el simbolo
-                        {
-                            this.SymbolsTable[row][column] = dictionarySimbol[i][1];//se escribe el valor del simbolo
-                        }
+                        this.SymbolsTable[row][column] = dictionarySimbol[i][1];//se escribe el valor del simbolo
                     }
-            }
+                }
+            this.count_symbols = count_symbols + 1;//se inserto un simbolo
         }
         
-        boolean variable = false;
         if(clase.equals("variable"))
-        {//JOptionPane.showMessageDialog(null, "hay variable");
-            for(int i = 0; i < 6; i++)
+        {   
+            boolean variable = false;
+            
+            for(int i = 0; i < 6; i++)//verifica si hay tipo
             {
                 try {
                     if (SymbolsTable[row - 1][column + 2].equals(tipos[i])) 
@@ -121,32 +123,35 @@ public class data {
                         this.SymbolsTable[row][column] = token;//inserta el simbolo
                         this.column = this.column + 1;//pasamos a  la otra columna
                         this.SymbolsTable[row][column] = "variable";//se escribe el simbolo
+                        this.count_symbols = count_symbols + 1;//se inserto un simbolo
                         variable = true;
                         break;
                     }
                 }catch(NullPointerException|ArrayIndexOutOfBoundsException ex){}
             }
-            if(variable != true)//si no tiene tipo antes
-            {   boolean declarada = false;
-                for(int i = 0; i < count_symbols - 1; i ++)//verifica si ya ah sido declarada
+            
+            if(variable == false)//si no tiene tipo antes
+            {   
+                boolean declarada = false;
+                for(int i = 0; i < count_symbols; i ++)
                 {
-                    try{
-                    if(SymbolsTable[i][0].equals(token))//en caso de que si la agrega a la tabla de simbolos
+                    if(SymbolsTable[i][1].equals("variable")&&SymbolsTable[i][0].equals(token))//busca si ya existe esa palabra
                     {
-                        declarada = true;//ya estaba declarada
-                        this.SymbolsTable[row][column] = token;//inserta el simbolo
+                        this.SymbolsTable[row][column] = token;
                         this.column = this.column + 1;//pasamos a  la otra columna
                         this.SymbolsTable[row][column] = "variable";//tipo
-                    }
-                    }catch(NullPointerException e){}
+                        this.count_symbols = count_symbols + 1;//se inserto un simbolo
+                        declarada = true;
+                        break;
+                    }                         
                 }
-                if(declarada == false)//si no tiene tipo y no esta declarada
+                if(declarada == false)
                 {
-                    SymbolsTable[row][column] = token;
+                    this.SymbolsTable[row][column] = token;
                     this.column = this.column + 1;//pasamos a  la otra columna
                     this.SymbolsTable[row][column] = "texto";//tipo
+                    this.count_symbols = count_symbols + 1;//se inserto un simbolo
                 }
-                
             }
         }
         
@@ -162,7 +167,7 @@ public class data {
     public void solo_probando(){
         System.out.println("TABLA DE SIMBOLOS");
         System.out.println("Token\tClase\tTipo");
-        for(int i= 0; i<count_symbols;i++)
+        for(int i= 0; i<=count_symbols;i++)
         {
             for(int j = 0; j<3; j++)
             {
