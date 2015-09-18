@@ -23,6 +23,8 @@ public class sintactic_Analysis {
     private int indice_errores = -1; 
     private int numeroElse=0;
     private int numeroIf=0;
+    private int indiceIf=0;
+    private int indiceElse=0;
     
     public void setSintacticAnalysis(Interface Interface, data data, sA_Int Int) {
         this.Interface = Interface;
@@ -41,6 +43,8 @@ public class sintactic_Analysis {
         this.Stdio = false;
         this.numeroElse=0;
         this.numeroIf=0;
+        this.indiceElse=0;
+        this.indiceIf=0;
     }
      
      public void print_errors(){
@@ -231,6 +235,9 @@ public class sintactic_Analysis {
                     numeroIf++;
                     entra=true;
                     fin=false;
+                    if (in<1) {
+                        indiceIf=i;
+                    }
                 }
                 if(data.SymbolsTable[indice+1][2].equals("2") && entra==true){ // (
                     if (data.SymbolsTable[indice+2][1].equals("variable") ||  // variable declarada
@@ -284,7 +291,7 @@ public class sintactic_Analysis {
     }
      
     void automataElse(){
-        int llave=0;
+        int llave=0,in=0;
         boolean entra=false,fin=false;
         boolean ELSE[]=new boolean[100];
         boolean dobleElse=false;
@@ -298,6 +305,9 @@ public class sintactic_Analysis {
                             entra=true;
                             fin=false;
                             numeroElse++;
+                            if (in<1) {
+                                indiceElse=i;
+                            }
                         }
                         if (entra==true && data.SymbolsTable[llave+1][2].equals("8")) { // {
                             fin=true;
@@ -315,7 +325,7 @@ public class sintactic_Analysis {
                 noElse=true;
             }
         }
-        if(fin !=true && entra!=false  || dobleElse==true || numeroElse> numeroIf || noElse==true){
+        if(fin !=true && entra!=false  || dobleElse==true || numeroElse> numeroIf || noElse==true || indiceElse<indiceIf){
             this.indice_errores = indice_errores + 1;
             this.errores[indice_errores] = "error en else";
         }
@@ -388,7 +398,53 @@ public class sintactic_Analysis {
             }       
         }
     }
-    
+    public void automataScanf(){
+        int indice = 0;
+        boolean entra = false;
+        boolean operadores = false;
+        boolean fin = false;
+         boolean datos = false;
+        String tiposDatos[]={"38","39","40","41"};
+        
+            for(int i = 0; i < data.count_symbols; i ++){
+                try{
+                    if(data.SymbolsTable[i][2].equals("42")) //scanf
+                    {
+                            indice=i;
+                            entra=true;
+                    }
+                    if(entra == true && data.SymbolsTable[indice+1][2].equals("2")){ //(
+                        if(data.SymbolsTable[indice+2][2].equals("37")){ //"
+                            for(int j=0;j<4;j++){
+                                if(data.SymbolsTable[indice+3][2].equals(tiposDatos[j])){//%d %f %c %s
+                                   datos=true; 
+                                } 
+                            } 
+                            if (data.SymbolsTable[indice+4][2].equals("37") && datos== true ) { //"
+                                if(data.SymbolsTable[indice+5][2].equals("34")){//,
+                                    if(data.SymbolsTable[indice+6][2].equals("43")){// &
+                                        if(data.SymbolsTable[indice+7][1].equals("variable") //vaariable numero
+                                            ||data.SymbolsTable[indice+7][1].equals("numero")){
+                                            if (data.SymbolsTable[indice+8][2].equals("3")) { //)
+                                                if (data.SymbolsTable[indice+9][2].equals("14")) { // ;
+                                                        fin=true;
+                                                         // JOptionPane.showMessageDialog(null,"scanf");
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }catch(NullPointerException ex){}
+            }
+            if(fin != true && entra != false)
+            {
+                this.indice_errores = indice_errores + 1;
+                this.errores[indice_errores] = "error en scanf";
+            }
+    }
     public void Int(){
         int indice = 0;
         boolean terminado = false;
@@ -438,14 +494,14 @@ public class sintactic_Analysis {
                    try{
                     cadena = cadena + ";";
                     terminado = Int.Estado(cadena);
-                    JOptionPane.showMessageDialog(null, cadena+ "" + terminado);
+                    //JOptionPane.showMessageDialog(null, cadena+ "" + terminado);
                    }catch(NullPointerException e){}   
                 }
                 }catch(NullPointerException|ArrayIndexOutOfBoundsException e){} 
                 
                 if(terminado == false && banEncontrado && banError)
                     {
-                        JOptionPane.showMessageDialog(null, banEncontrado+ "Por que entra  no mamar" + terminado);
+                        //JOptionPane.showMessageDialog(null, banEncontrado+ "Por que entra  no mamar" + terminado);
                         this.indice_errores = indice_errores + 1;
                         this.errores[indice_errores] = "Error en Int";
                     }

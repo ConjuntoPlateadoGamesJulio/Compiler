@@ -47,6 +47,7 @@ public class Analysis implements ActionListener {
         sA.automataIf();
         sA.automataElse();
         sA.Printf();
+        sA.automataScanf();
         sA.Int();
         //IMRPIME TABLA DE SIMBOLOS Y MUESTRA ERRORES
         sA.print_errors();
