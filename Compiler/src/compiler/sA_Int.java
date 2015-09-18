@@ -13,18 +13,24 @@ import javax.swing.JOptionPane;
  */
 public class sA_Int {
         
-    int cont = 0;
-    boolean terminado = false, bandera = true;
-    String cadena;
-    String q;
-    String alfabeto = "abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
-    String qAux;
+    private int cont = 0;
+    private boolean terminado, bandera;
+    private String cadena;
+    private String q;
+    private final String alfabeto = "abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+    private String qAux;
+    
+    public void Init_Int (String cad){
+        this.terminado = false;
+        this.bandera = true;
+        this.cadena = cad;
+        this.cont = 0;
+    }
               
-    public boolean Estado(String cad){
-        cadena = cad;
+    public boolean Estado(){
         Estado0();
         System.out.println("araña: "+cadena);
-        if(terminado==true)
+        if(this.terminado)
         {
             return true;
         }
@@ -34,13 +40,37 @@ public class sA_Int {
     }
     
     public void Estado0(){
-        try{
-        q = cadena.substring(cont, cont+3);
-        }catch(StringIndexOutOfBoundsException e){}
-        if("int".equals(q))
+        //JOptionPane.showMessageDialog(null, "hola");
+        q = cadena.substring(cont, cont+1);
+        //catch(StringIndexOutOfBoundsException e){}
+        if("i".equals(q))
         {
-            cont=cont+3;
+            cont=cont+1;
             //System.out.println(q+" estado 0");
+            Estado1();
+        }
+        
+    }
+    
+    public void Estado1(){
+        q = cadena.substring(cont, cont+1);
+        //catch(StringIndexOutOfBoundsException e){}
+        if("n".equals(q))
+        {
+            cont=cont+1;
+            //System.out.println(q+" estado 1");
+            Estado2();
+        }
+    }
+    
+    
+    public void Estado2(){
+        q = cadena.substring(cont, cont+1);
+        //catch(StringIndexOutOfBoundsException e){}
+        if("t".equals(q))
+        {
+            cont=cont+1;
+            //System.out.println(q+" estado 2");
             Estado4();
         }
     }
@@ -91,6 +121,7 @@ public class sA_Int {
     }
     
     public void Estado6(){
+        //System.out.println("estado6");
         terminado=true;
     }
     
@@ -131,7 +162,7 @@ public class sA_Int {
                 if(",".equals(q))
                 {
                     cont++;
-                  //  System.out.println(q + "estado8");
+                    //System.out.println(q + "estado8");
                     Estado4();
                 }
                 else{

@@ -463,7 +463,8 @@ public class sintactic_Analysis {
                 }catch(NullPointerException e){}
             
             if(banEncontrado == true)
-            {                
+            {        
+                cadena = null;
                 try{
                     while(!";".equals(data.SymbolsTable[indice][0]) 
                             && !"float".equals(data.SymbolsTable[indice][0])
@@ -493,7 +494,8 @@ public class sintactic_Analysis {
                 {
                    try{
                     cadena = cadena + ";";
-                    terminado = Int.Estado(cadena);
+                    Int.Init_Int(cadena);
+                    terminado = Int.Estado();
                     //JOptionPane.showMessageDialog(null, cadena+ "" + terminado);
                    }catch(NullPointerException e){}   
                 }
