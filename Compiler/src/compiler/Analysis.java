@@ -22,9 +22,14 @@ public class Analysis implements ActionListener {
     private sintactic_Analysis sA;
     private data data;
     private sA_Int Int;
+    private sA_Float Float;
+    private sA_Bool Bool;
+    private sA_Operaciones Ope;
     private semantic_Analysis semantic;
 
-    public Analysis(Interface Interface, data data, lexical_Analysis lA, sintactic_Analysis sA, sA_Int Int, semantic_Analysis semantic) {
+    public Analysis(Interface Interface, data data, lexical_Analysis lA, sintactic_Analysis sA, 
+            sA_Int Int, sA_Float Float, sA_Bool Bool, sA_Operaciones Ope,
+            semantic_Analysis semantic) {
         this.Interface = Interface;
         this.data = data;
         this.lA = lA;
@@ -32,6 +37,9 @@ public class Analysis implements ActionListener {
         this.Interface.PROBANDO.addActionListener(this);
         this.semantic = semantic;
         this.Int = Int;
+        this.Float = Float;
+        this.Bool = Bool;
+        this.Ope = Ope;
     }
 
     @Override
@@ -42,7 +50,7 @@ public class Analysis implements ActionListener {
         lA.proccess();//mete todo a la tabla de simbolos
         
         //ANALISIS SINTACTICO
-        sA.setSintacticAnalysis(Interface, data, Int);//constructor
+        sA.setSintacticAnalysis(Interface, data, Int, Float, Bool, Ope);//constructor
         sA.inicializar_y_limpiar();//inicializa y borra el panel de errores
         sA.cabeceras();//evalua las librerias
         sA.While();//evalua el ciclo While y do-While
@@ -52,6 +60,9 @@ public class Analysis implements ActionListener {
         sA.automataScanf();
         sA.Main();//evalua el metodo main
         sA.Int();
+        sA.Float();
+        sA.Bool();
+        sA.Operaciones();
         
         //ANALISI SEMANTICO
         semantic.set_semantic_Analysis(Interface, data, sA);

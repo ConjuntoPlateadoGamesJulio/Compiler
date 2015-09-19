@@ -63,7 +63,8 @@ public class data {
                                            {"%f","39"},
                                            {"%s","40"},
                                            {"%c","41"},
-                                           {"scanf","42"}
+                                           {"scanf","42"},
+                                           {"ope:","44"}
                                           };
     public String tipos[] = {"24","25","26","27","28","29"};
     
@@ -93,7 +94,7 @@ public class data {
             this.SymbolsTable[row][column] = "Palabra Reservada";//se escribe palabra reservada
             this.column = this.column + 1;//pasamos a la otra columna
             
-            for(int i = 0; i < 21; i ++)
+            for(int i = 0; i < 22; i ++)
             {
                 if(dictionaryWReser[i][0].equals(token))//se busca la palabra reservada
                 {

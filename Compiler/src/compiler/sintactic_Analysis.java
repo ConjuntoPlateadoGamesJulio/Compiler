@@ -17,6 +17,9 @@ public class sintactic_Analysis {
     private Interface Interface;
     private data data;
     private sA_Int Int;
+    private sA_Float Float;
+    private sA_Bool Bool;
+    private sA_Operaciones Ope;
     public boolean hayPrintf = false;
     public boolean Stdio = false;
     public String errores [] = new String[100];
@@ -26,10 +29,14 @@ public class sintactic_Analysis {
     private int indiceIf=0;
     private int indiceElse=0;
     
-    public void setSintacticAnalysis(Interface Interface, data data, sA_Int Int) {
+    public void setSintacticAnalysis(Interface Interface, data data, 
+            sA_Int Int, sA_Float Float, sA_Bool Bool, sA_Operaciones Ope) {
         this.Interface = Interface;
         this.data = data;
         this.Int = Int;
+        this.Float = Float;
+        this.Bool = Bool;
+        this.Ope = Ope;
     }
     
      public void inicializar_y_limpiar(){
@@ -562,6 +569,220 @@ public class sintactic_Analysis {
                         //JOptionPane.showMessageDialog(null, banEncontrado+ "Por que entra  no mamar" + terminado);
                         this.indice_errores = indice_errores + 1;
                         this.errores[indice_errores] = "Error en Int";
+                    }
+                
+                terminado = false;
+                banEncontrado = false;
+                primeravez = true;
+                cadena = null;
+            }
+        }
+    }
+    
+    public void Float(){
+        int indice = 0;
+        boolean terminado = false;
+        boolean banEncontrado = false;
+        boolean banError = false;
+        boolean primeravez = true;
+        String cadena = null;
+        
+        for(int i = 0; i<data.count_symbols; i++){
+            try{
+                if(data.SymbolsTable[i][2].equals("25"))
+                    {
+                        indice = i;
+                        banEncontrado = true;
+                    }
+                }catch(NullPointerException e){}
+            
+            if(banEncontrado == true)
+            {        
+                cadena = null;
+                try{
+                    while(!";".equals(data.SymbolsTable[indice][0]) 
+                            && !"float".equals(data.SymbolsTable[indice+1][0])
+                            && !"char".equals(data.SymbolsTable[indice][0])     
+                            && !"double".equals(data.SymbolsTable[indice][0])
+                            && !"bool".equals(data.SymbolsTable[indice][0])
+                            && !"44".equals(data.SymbolsTable[indice][2])
+                            && !"19".equals(data.SymbolsTable[indice+1][2])
+                            && !"int".equals(data.SymbolsTable[indice][0])
+                            )
+                    {
+                        banError = true;
+                        try{
+                        cadena = cadena + data.SymbolsTable[indice][0];
+                        if(primeravez)
+                        {
+                            cadena = cadena.substring(4);
+                            primeravez = false;
+                        }
+                        indice++;
+                        }catch(NullPointerException e){}   
+                    }
+                }catch(ArrayIndexOutOfBoundsException e){}
+
+                try{
+                if(data.SymbolsTable[indice][0].equals(";"))
+                {
+                   try{
+                    cadena = cadena + ";";
+                    Float.Init_Float(cadena);
+                    terminado = Float.Estado();
+                    //JOptionPane.showMessageDialog(null, cadena+ "" + terminado);
+                   }catch(NullPointerException e){}   
+                }
+                }catch(NullPointerException|ArrayIndexOutOfBoundsException e){} 
+                
+                if(terminado == false && banEncontrado && banError)
+                    {
+                        //JOptionPane.showMessageDialog(null, banEncontrado+ "Por que entra  no mamar" + terminado);
+                        this.indice_errores = indice_errores + 1;
+                        this.errores[indice_errores] = "Error en Float";
+                    }
+                
+                terminado = false;
+                banEncontrado = false;
+                primeravez = true;
+                cadena = null;
+            }
+        }
+    }
+    
+    public void Bool(){
+        int indice = 0;
+        boolean terminado = false;
+        boolean banEncontrado = false;
+        boolean banError = false;
+        boolean primeravez = true;
+        String cadena = null;
+        
+        for(int i = 0; i<data.count_symbols; i++){
+            try{
+                if(data.SymbolsTable[i][2].equals("27"))
+                    {
+                        indice = i;
+                        banEncontrado = true;
+                    }
+                }catch(NullPointerException e){}
+            
+            if(banEncontrado == true)
+            {        
+                cadena = null;
+                try{
+                    while(!";".equals(data.SymbolsTable[indice][0]) 
+                            && !"float".equals(data.SymbolsTable[indice][0])
+                            && !"char".equals(data.SymbolsTable[indice][0])     
+                            && !"double".equals(data.SymbolsTable[indice][0])
+                            && !"bool".equals(data.SymbolsTable[indice+1][0])
+                            && !"44".equals(data.SymbolsTable[indice][2])
+                            && !"19".equals(data.SymbolsTable[indice+1][2])
+                            && !"int".equals(data.SymbolsTable[indice][0])
+                            )
+                    {
+                        banError = true;
+                        try{
+                        cadena = cadena + data.SymbolsTable[indice][0];
+                        if(primeravez)
+                        {
+                            cadena = cadena.substring(4);
+                            primeravez = false;
+                        }
+                        indice++;
+                        }catch(NullPointerException e){}   
+                    }
+                }catch(ArrayIndexOutOfBoundsException e){}
+
+                try{
+                if(data.SymbolsTable[indice][0].equals(";"))
+                {
+                   try{
+                    cadena = cadena + ";";
+                    Bool.Init_Bool(cadena);
+                    terminado = Bool.Estado();
+                    //JOptionPane.showMessageDialog(null, cadena+ "" + terminado);
+                   }catch(NullPointerException e){}   
+                }
+                }catch(NullPointerException|ArrayIndexOutOfBoundsException e){} 
+                
+                if(terminado == false && banEncontrado && banError)
+                    {
+                        //JOptionPane.showMessageDialog(null, banEncontrado+ "Por que entra  no mamar" + terminado);
+                        this.indice_errores = indice_errores + 1;
+                        this.errores[indice_errores] = "Error en Bool";
+                    }
+                
+                terminado = false;
+                banEncontrado = false;
+                primeravez = true;
+                cadena = null;
+            }
+        }
+    }
+    
+    public void Operaciones(){
+        int indice = 0;
+        boolean terminado = false;
+        boolean banEncontrado = false;
+        boolean banError = false;
+        boolean primeravez = true;
+        String cadena = null;
+        
+        for(int i = 0; i<data.count_symbols; i++){
+            try{
+                if(data.SymbolsTable[i][2].equals("44"))
+                    {
+                        indice = i;
+                        banEncontrado = true;
+                    }
+                }catch(NullPointerException e){}
+            
+            if(banEncontrado == true)
+            {        
+                cadena = null;
+                try{
+                    while(!";".equals(data.SymbolsTable[indice][0]) 
+                            && !"float".equals(data.SymbolsTable[indice][0])
+                            && !"char".equals(data.SymbolsTable[indice][0])     
+                            && !"double".equals(data.SymbolsTable[indice][0])
+                            && !"bool".equals(data.SymbolsTable[indice][0])
+                            && !"44".equals(data.SymbolsTable[indice+1][2])
+                            && !"19".equals(data.SymbolsTable[indice+1][2])
+                            && !"int".equals(data.SymbolsTable[indice][0])
+                            )
+                    {
+                        banError = true;
+                        try{
+                        cadena = cadena + data.SymbolsTable[indice][0];
+                        if(primeravez)
+                        {
+                            cadena = cadena.substring(4);
+                            primeravez = false;
+                        }
+                        indice++;
+                        }catch(NullPointerException e){}   
+                    }
+                }catch(ArrayIndexOutOfBoundsException e){}
+
+                try{
+                if(data.SymbolsTable[indice][0].equals(";"))
+                {
+                   try{
+                    cadena = cadena + ";";
+                    cadena = cadena.substring(4);
+                    Ope.Init_Ope(cadena);
+                    terminado = Ope.Estado();
+                    //JOptionPane.showMessageDialog(null, cadena+ "" + terminado);
+                   }catch(NullPointerException e){}   
+                }
+                }catch(NullPointerException|ArrayIndexOutOfBoundsException e){} 
+                
+                if(terminado == false && banEncontrado && banError)
+                    {
+                        //JOptionPane.showMessageDialog(null, banEncontrado+ "Por que entra  no mamar" + terminado);
+                        this.indice_errores = indice_errores + 1;
+                        this.errores[indice_errores] = "Error en Operacion";
                     }
                 
                 terminado = false;
