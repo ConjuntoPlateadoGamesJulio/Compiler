@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 public class sA_Int {
         
     private int cont = 0;
-    private boolean terminado;
+    private boolean terminado, bandera;
     private String cadena;
     private String q;
     private final String alfabeto = "abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
@@ -22,6 +22,7 @@ public class sA_Int {
     
     public void Init_Int (String cad){
         this.terminado = false;
+        this.bandera = true;
         this.cadena = cad;
         this.cont = 0;
     }
@@ -34,7 +35,8 @@ public class sA_Int {
             return true;
         }
         else
-            return false;      
+            return false;
+        
     }
     
     public void Estado0(){
@@ -107,20 +109,12 @@ public class sA_Int {
                 }
                 
                 else{
-                        if(ChecarAlfabetoNum())
-                        {
-                            cont++;
-                            //System.out.println(q + " estado5");
-                            Estado5();
-                        }
-                        else{
-                            if("=".equals(q))
-                            {
-                                cont++;
-                                //System.out.println(q + " estado5");
-                                Estado7();
-                            }
-                        }
+                    if("=".equals(q))
+                    {
+                        cont++;
+                        //System.out.println(q + " estado5");
+                        Estado7();
+                    }
                 }
             }
         }
