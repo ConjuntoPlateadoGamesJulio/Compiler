@@ -43,8 +43,11 @@ public class sintactic_Analysis {
         this.Stdio = false;
         this.numeroElse=0;
         this.numeroIf=0;
+<<<<<<< HEAD
         this.indiceElse=1000000000;
+=======
         this.indiceElse=0;
+>>>>>>> origin/master
         this.indiceIf=0;
     }
      
@@ -527,7 +530,7 @@ public class sintactic_Analysis {
                             && !"char".equals(data.SymbolsTable[indice][0])     
                             && !"double".equals(data.SymbolsTable[indice][0])
                             && !"bool".equals(data.SymbolsTable[indice][0])
-                            && !"44".equals(data.SymbolsTable[indice][2])
+                            && !"42".equals(data.SymbolsTable[indice][2])
                             && !"19".equals(data.SymbolsTable[indice+1][2])
                             && !"int".equals(data.SymbolsTable[indice+1][0])
                             )
