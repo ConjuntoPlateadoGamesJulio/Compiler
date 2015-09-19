@@ -17,12 +17,14 @@ public class sintactic_Analysis {
     private Interface Interface;
     private data data;
     private sA_Int Int;
-    private boolean hayPrintf = false;
-    private boolean Stdio = false;
-    private String errores [] = new String[100];
-    private int indice_errores = -1; 
+    public boolean hayPrintf = false;
+    public boolean Stdio = false;
+    public String errores [] = new String[100];
+    public int indice_errores = -1; 
     private int numeroElse=0;
     private int numeroIf=0;
+    private int indiceIf=0;
+    private int indiceElse=0;
     
     public void setSintacticAnalysis(Interface Interface, data data, sA_Int Int) {
         this.Interface = Interface;
@@ -41,6 +43,8 @@ public class sintactic_Analysis {
         this.Stdio = false;
         this.numeroElse=0;
         this.numeroIf=0;
+        this.indiceElse=1000000000;
+        this.indiceIf=0;
     }
      
      public void print_errors(){
@@ -215,6 +219,57 @@ public class sintactic_Analysis {
       }
     }
      
+    public void Main(){
+        int indice = 0;
+        int full = 0;
+        int count = 0;
+        boolean Main = false;
+        String automata[] = {"24", "19", "2", "3", "8"};
+        int k = - 1;
+        
+        for(int i = 0; i < data.count_symbols; i ++)//busca el int y el main juntos
+        {
+            try{
+                if(data.SymbolsTable[i][2].equals("24") && data.SymbolsTable[i + 1][2].equals("19"))
+                {
+                    full = 5;
+                    indice = i;//se obtiene el indice
+                    count = count + 1;
+                    Main = true;
+                }
+            }catch(NullPointerException e){}
+            
+            if(Main == true && count == 1)//si hubo "int main" y es el unico
+            {
+                for(int j = indice; j < (indice + 5); j++)
+                {
+                    k = k + 1;
+                    try {
+                        if(data.SymbolsTable[j][2].equals(automata[k]))//se valida si cumple con todo
+                        {
+                            full = full - 1;
+                        }
+                    }catch(NullPointerException|ArrayIndexOutOfBoundsException e){};
+                }
+            }
+        }
+        if(count > 1)
+        {
+            this.indice_errores = indice_errores + 1;
+            this.errores[indice_errores] = "Error.-Hay mas de un metodo main";
+        }
+        if(Main == true && full != 0)
+        {
+            this.indice_errores = indice_errores + 1;
+            this.errores[indice_errores] = "Error.-Metodo main";
+        }
+        if(Main == false)
+        {
+            this.indice_errores = indice_errores + 1;
+            this.errores[indice_errores] = "Error.-No hay metodo main";
+        }
+    } 
+    
      void automataIf(){
         int indice=0,in=0,tamaño=0;
         boolean entra=false,fin=false;
@@ -231,6 +286,9 @@ public class sintactic_Analysis {
                     numeroIf++;
                     entra=true;
                     fin=false;
+                    if (in<1) {
+                        indiceIf=i;
+                    }
                 }
                 if(data.SymbolsTable[indice+1][2].equals("2") && entra==true){ // (
                     if (data.SymbolsTable[indice+2][1].equals("variable") ||  // variable declarada
@@ -284,7 +342,7 @@ public class sintactic_Analysis {
     }
      
     void automataElse(){
-        int llave=0;
+        int llave=0,in=0;
         boolean entra=false,fin=false;
         boolean ELSE[]=new boolean[100];
         boolean dobleElse=false;
@@ -298,6 +356,9 @@ public class sintactic_Analysis {
                             entra=true;
                             fin=false;
                             numeroElse++;
+                            if (in<1) {
+                                indiceElse=i;
+                            }
                         }
                         if (entra==true && data.SymbolsTable[llave+1][2].equals("8")) { // {
                             fin=true;
@@ -315,7 +376,7 @@ public class sintactic_Analysis {
                 noElse=true;
             }
         }
-        if(fin !=true && entra!=false  || dobleElse==true || numeroElse> numeroIf || noElse==true){
+        if(fin !=true && entra!=false  || dobleElse==true || numeroElse> numeroIf || noElse==true || indiceElse<indiceIf){
             this.indice_errores = indice_errores + 1;
             this.errores[indice_errores] = "error en else";
         }
@@ -358,7 +419,7 @@ public class sintactic_Analysis {
                 }
                 for(int j = (indice + 3); j < data.count_symbols; j++)
                 {
-                    if(data.SymbolsTable[j][1].equals("texto"))
+                    if(!data.SymbolsTable[j][1].equals("Simbolo"))
                     {
                         texto = texto + 1;
                     }
@@ -381,6 +442,10 @@ public class sintactic_Analysis {
                     }
                 }
             }
+            if(printf == true && full == 0)
+            {
+                this.hayPrintf = true;
+            }
             if(printf == true && full != 0)
             {
                 this.indice_errores = indice_errores + 1;
@@ -388,7 +453,53 @@ public class sintactic_Analysis {
             }       
         }
     }
-    
+    public void automataScanf(){
+        int indice = 0;
+        boolean entra = false;
+        boolean operadores = false;
+        boolean fin = false;
+         boolean datos = false;
+        String tiposDatos[]={"38","39","40","41"};
+        
+            for(int i = 0; i < data.count_symbols; i ++){
+                try{
+                    if(data.SymbolsTable[i][2].equals("42")) //scanf
+                    {
+                            indice=i;
+                            entra=true;
+                    }
+                    if(entra == true && data.SymbolsTable[indice+1][2].equals("2")){ //(
+                        if(data.SymbolsTable[indice+2][2].equals("37")){ //"
+                            for(int j=0;j<4;j++){
+                                if(data.SymbolsTable[indice+3][2].equals(tiposDatos[j])){//%d %f %c %s
+                                   datos=true; 
+                                } 
+                            } 
+                            if (data.SymbolsTable[indice+4][2].equals("37") && datos== true ) { //"
+                                if(data.SymbolsTable[indice+5][2].equals("34")){//,
+                                    if(data.SymbolsTable[indice+6][2].equals("43")){// &
+                                        if(data.SymbolsTable[indice+7][1].equals("variable") //vaariable numero
+                                            ||data.SymbolsTable[indice+7][1].equals("numero")){
+                                            if (data.SymbolsTable[indice+8][2].equals("3")) { //)
+                                                if (data.SymbolsTable[indice+9][2].equals("14")) { // ;
+                                                        fin=true;
+                                                         // JOptionPane.showMessageDialog(null,"scanf");
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }catch(NullPointerException ex){}
+            }
+            if(fin != true && entra != false)
+            {
+                this.indice_errores = indice_errores + 1;
+                this.errores[indice_errores] = "error en scanf";
+            }
+    }
     public void Int(){
         int indice = 0;
         boolean terminado = false;
@@ -407,7 +518,8 @@ public class sintactic_Analysis {
                 }catch(NullPointerException e){}
             
             if(banEncontrado == true)
-            {                
+            {        
+                cadena = null;
                 try{
                     while(!";".equals(data.SymbolsTable[indice][0]) 
                             && !"float".equals(data.SymbolsTable[indice][0])
@@ -437,15 +549,16 @@ public class sintactic_Analysis {
                 {
                    try{
                     cadena = cadena + ";";
-                    terminado = Int.Estado(cadena);
-                    JOptionPane.showMessageDialog(null, cadena+ "" + terminado);
+                    Int.Init_Int(cadena);
+                    terminado = Int.Estado();
+                    //JOptionPane.showMessageDialog(null, cadena+ "" + terminado);
                    }catch(NullPointerException e){}   
                 }
                 }catch(NullPointerException|ArrayIndexOutOfBoundsException e){} 
                 
                 if(terminado == false && banEncontrado && banError)
                     {
-                        JOptionPane.showMessageDialog(null, banEncontrado+ "Por que entra  no mamar" + terminado);
+                        //JOptionPane.showMessageDialog(null, banEncontrado+ "Por que entra  no mamar" + terminado);
                         this.indice_errores = indice_errores + 1;
                         this.errores[indice_errores] = "Error en Int";
                     }

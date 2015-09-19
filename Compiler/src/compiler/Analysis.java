@@ -22,13 +22,15 @@ public class Analysis implements ActionListener {
     private sintactic_Analysis sA;
     private data data;
     private sA_Int Int;
+    private semantic_Analysis semantic;
 
-    public Analysis(Interface Interface, data data, lexical_Analysis lA, sintactic_Analysis sA, sA_Int Int) {
+    public Analysis(Interface Interface, data data, lexical_Analysis lA, sintactic_Analysis sA, sA_Int Int, semantic_Analysis semantic) {
         this.Interface = Interface;
         this.data = data;
         this.lA = lA;
         this.sA = sA;
         this.Interface.PROBANDO.addActionListener(this);
+        this.semantic = semantic;
         this.Int = Int;
     }
 
@@ -47,7 +49,14 @@ public class Analysis implements ActionListener {
         sA.automataIf();
         sA.automataElse();
         sA.Printf();
+        sA.automataScanf();
+        sA.Main();//evalua el metodo main
         sA.Int();
+        
+        //ANALISI SEMANTICO
+        semantic.set_semantic_Analysis(Interface, data, sA);
+        semantic.checkLibrary();//revisa que este libreria stdio.h para el scanf y printf
+        
         //IMRPIME TABLA DE SIMBOLOS Y MUESTRA ERRORES
         sA.print_errors();
         data.solo_probando();

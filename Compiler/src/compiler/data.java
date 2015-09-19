@@ -37,8 +37,10 @@ public class data {
                                            {"!","32"},
                                            {"'","33"},
                                            {",","34"},
-                                           {".","36"}
-                                          };
+                                           {".","36"},
+                                           {"\"","37"},
+                                           {"&","43"}
+                                            };
     
     public String dictionaryWReser[][] = {
                                            {"include","16",},
@@ -56,7 +58,12 @@ public class data {
                                            {"char","28"},
                                            {"String","29"},
                                            {"printf","30"},
-                                           {"else","35"}
+                                           {"else","35"},
+                                           {"%d","38"},
+                                           {"%f","39"},
+                                           {"%s","40"},
+                                           {"%c","41"},
+                                           {"scanf","42"}
                                           };
     public String tipos[] = {"24","25","26","27","28","29"};
     
@@ -86,7 +93,7 @@ public class data {
             this.SymbolsTable[row][column] = "Palabra Reservada";//se escribe palabra reservada
             this.column = this.column + 1;//pasamos a la otra columna
             
-            for(int i = 0; i < 16; i ++)
+            for(int i = 0; i < 21; i ++)
             {
                 if(dictionaryWReser[i][0].equals(token))//se busca la palabra reservada
                 {
@@ -103,7 +110,7 @@ public class data {
             this.SymbolsTable[row][column] = "Simbolo";//se escribe el simbolo
             this.column = this.column + 1;//pasamos a la otra columna
             
-            for(int i = 0; i < 19; i ++)
+            for(int i = 0; i < 21; i ++)
                 {
                     if(dictionarySimbol[i][0].equals(token))//se busca el simbolo
                     {
