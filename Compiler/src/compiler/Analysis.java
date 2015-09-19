@@ -50,7 +50,10 @@ public class Analysis implements ActionListener {
         sA.automataElse();
         sA.Printf();
         sA.automataScanf();
+<<<<<<< HEAD
         sA.Main();//evalua el metodo main
+=======
+>>>>>>> origin/master
         sA.Int();
         
         //ANALISI SEMANTICO

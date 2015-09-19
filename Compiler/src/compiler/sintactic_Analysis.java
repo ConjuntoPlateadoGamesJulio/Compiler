@@ -43,7 +43,11 @@ public class sintactic_Analysis {
         this.Stdio = false;
         this.numeroElse=0;
         this.numeroIf=0;
+<<<<<<< HEAD
         this.indiceElse=1000000000;
+=======
+        this.indiceElse=0;
+>>>>>>> origin/master
         this.indiceIf=0;
     }
      
