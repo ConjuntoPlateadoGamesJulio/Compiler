@@ -29,6 +29,9 @@ public class sintactic_Analysis {
     private int indiceIf=0;
     private int indiceElse=0;
     
+    public String[] Vars;
+    public int contVars;
+            
     public void setSintacticAnalysis(Interface Interface, data data, 
             sA_Int Int, sA_Float Float, sA_Bool Bool, sA_Operaciones Ope) {
         this.Interface = Interface;
@@ -37,6 +40,9 @@ public class sintactic_Analysis {
         this.Float = Float;
         this.Bool = Bool;
         this.Ope = Ope;
+        
+        this.contVars = 0;
+        this.Vars = new String [50];
     }
     
      public void inicializar_y_limpiar(){
@@ -515,6 +521,7 @@ public class sintactic_Analysis {
         boolean banError = false;
         boolean primeravez = true;
         String cadena = null;
+        String variable = "";
         
         for(int i = 0; i<data.count_symbols; i++){
             try{
@@ -545,6 +552,11 @@ public class sintactic_Analysis {
                         if(primeravez)
                         {
                             cadena = cadena.substring(4);
+                            variable = data.SymbolsTable[indice+1][0];
+                            if(data.SymbolsTable[indice+2][1].equals("numero"))
+                            {
+                                variable = variable + data.SymbolsTable[indice+2][0];
+                            }
                             primeravez = false;
                         }
                         indice++;
@@ -559,6 +571,12 @@ public class sintactic_Analysis {
                     cadena = cadena + ";";
                     Int.Init_Int(cadena);
                     terminado = Int.Estado();
+                    if(terminado)
+                    {
+                        Vars[contVars] = variable;
+                        contVars++;
+                        //JOptionPane.showMessageDialog(null, ints[cont-1]);
+                    }
                     //JOptionPane.showMessageDialog(null, cadena+ "" + terminado);
                    }catch(NullPointerException e){}   
                 }
@@ -586,6 +604,7 @@ public class sintactic_Analysis {
         boolean banError = false;
         boolean primeravez = true;
         String cadena = null;
+        String variable = "";
         
         for(int i = 0; i<data.count_symbols; i++){
             try{
@@ -616,6 +635,11 @@ public class sintactic_Analysis {
                         if(primeravez)
                         {
                             cadena = cadena.substring(4);
+                            variable = data.SymbolsTable[indice+1][0];
+                            if(data.SymbolsTable[indice+2][1].equals("numero"))
+                            {
+                                variable = variable + data.SymbolsTable[indice+2][0];
+                            }
                             primeravez = false;
                         }
                         indice++;
@@ -630,6 +654,12 @@ public class sintactic_Analysis {
                     cadena = cadena + ";";
                     Float.Init_Float(cadena);
                     terminado = Float.Estado();
+                    if(terminado)
+                    {
+                        Vars[contVars] = variable;
+                        contVars++;
+                        //JOptionPane.showMessageDialog(null, ints[cont-1]);
+                    }
                     //JOptionPane.showMessageDialog(null, cadena+ "" + terminado);
                    }catch(NullPointerException e){}   
                 }
@@ -657,6 +687,7 @@ public class sintactic_Analysis {
         boolean banError = false;
         boolean primeravez = true;
         String cadena = null;
+        String variable = "";
         
         for(int i = 0; i<data.count_symbols; i++){
             try{
@@ -687,6 +718,11 @@ public class sintactic_Analysis {
                         if(primeravez)
                         {
                             cadena = cadena.substring(4);
+                            variable = data.SymbolsTable[indice+1][0];
+                            if(data.SymbolsTable[indice+2][1].equals("numero"))
+                            {
+                                variable = variable + data.SymbolsTable[indice+2][0];
+                            }
                             primeravez = false;
                         }
                         indice++;
@@ -701,6 +737,12 @@ public class sintactic_Analysis {
                     cadena = cadena + ";";
                     Bool.Init_Bool(cadena);
                     terminado = Bool.Estado();
+                    if(terminado)
+                    {
+                        Vars[contVars] = variable;
+                        contVars++;
+                        //JOptionPane.showMessageDialog(null, ints[cont-1]);
+                    }
                     //JOptionPane.showMessageDialog(null, cadena+ "" + terminado);
                    }catch(NullPointerException e){}   
                 }
@@ -727,7 +769,9 @@ public class sintactic_Analysis {
         boolean banEncontrado = false;
         boolean banError = false;
         boolean primeravez = true;
+        boolean encontrado = false;
         String cadena = null;
+        String variable = "";
         
         for(int i = 0; i<data.count_symbols; i++){
             try{
@@ -758,6 +802,11 @@ public class sintactic_Analysis {
                         if(primeravez)
                         {
                             cadena = cadena.substring(4);
+                            variable = data.SymbolsTable[indice+1][0];
+                            if(data.SymbolsTable[indice+2][1].equals("numero"))
+                            {
+                                variable = variable + data.SymbolsTable[indice+2][0];
+                            }
                             primeravez = false;
                         }
                         indice++;
@@ -773,11 +822,24 @@ public class sintactic_Analysis {
                     cadena = cadena.substring(4);
                     Ope.Init_Ope(cadena);
                     terminado = Ope.Estado();
+                    for(int a = 0; a < contVars ; a++)
+                    {
+                        if(variable.equals(Vars[a]))
+                        {
+                           encontrado = true;
+                           break;
+                        }
+                    }
                     //JOptionPane.showMessageDialog(null, cadena+ "" + terminado);
                    }catch(NullPointerException e){}   
                 }
                 }catch(NullPointerException|ArrayIndexOutOfBoundsException e){} 
                 
+                if(encontrado == false)
+                {
+                        this.indice_errores = indice_errores + 1;
+                        this.errores[indice_errores] = "Error: Variavle no declarada";
+                }
                 if(terminado == false && banEncontrado && banError)
                     {
                         //JOptionPane.showMessageDialog(null, banEncontrado+ "Por que entra  no mamar" + terminado);

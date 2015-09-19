@@ -67,6 +67,7 @@ public class Analysis implements ActionListener {
         //ANALISI SEMANTICO
         semantic.set_semantic_Analysis(Interface, data, sA);
         semantic.checkLibrary();//revisa que este libreria stdio.h para el scanf y printf
+        semantic.checkVars();
         
         //IMRPIME TABLA DE SIMBOLOS Y MUESTRA ERRORES
         sA.print_errors();
