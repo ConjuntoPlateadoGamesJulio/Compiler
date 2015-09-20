@@ -634,6 +634,7 @@ public class sintactic_Analysis {
                         this.errores[indice_errores] = "Error en Int";
                     }
                 
+                banError = false;
                 terminado = false;
                 banEncontrado = false;
                 primeravez = true;
@@ -717,6 +718,7 @@ public class sintactic_Analysis {
                         this.errores[indice_errores] = "Error en Float";
                     }
                 
+                banError = false;
                 terminado = false;
                 banEncontrado = false;
                 primeravez = true;
@@ -800,6 +802,7 @@ public class sintactic_Analysis {
                         this.errores[indice_errores] = "Error en Bool";
                     }
                 
+                banError = false;
                 terminado = false;
                 banEncontrado = false;
                 primeravez = true;
@@ -892,6 +895,7 @@ public class sintactic_Analysis {
                         this.errores[indice_errores] = "Error en Operacion";
                     }
                 
+                banError = false;
                 terminado = false;
                 banEncontrado = false;
                 primeravez = true;
