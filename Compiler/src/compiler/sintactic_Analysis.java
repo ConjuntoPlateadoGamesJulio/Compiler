@@ -17,6 +17,9 @@ public class sintactic_Analysis {
     private Interface Interface;
     private data data;
     private sA_Int Int;
+    private sA_Float Float;
+    private sA_Bool Bool;
+    private sA_Operaciones Ope;
     public boolean hayPrintf = false;
     public boolean Stdio = false;
     public String errores [] = new String[100];
@@ -25,11 +28,23 @@ public class sintactic_Analysis {
     private int numeroIf=0;
     private int indiceIf=0;
     private int indiceElse=0;
+    private int indiceMain = 0;
+    private boolean hayMain = false;
     
-    public void setSintacticAnalysis(Interface Interface, data data, sA_Int Int) {
+    public String[] Vars;
+    public int contVars;
+            
+    public void setSintacticAnalysis(Interface Interface, data data, 
+            sA_Int Int, sA_Float Float, sA_Bool Bool, sA_Operaciones Ope) {
         this.Interface = Interface;
         this.data = data;
         this.Int = Int;
+        this.Float = Float;
+        this.Bool = Bool;
+        this.Ope = Ope;
+        
+        this.contVars = 0;
+        this.Vars = new String [50];
     }
     
      public void inicializar_y_limpiar(){
@@ -43,12 +58,10 @@ public class sintactic_Analysis {
         this.Stdio = false;
         this.numeroElse=0;
         this.numeroIf=0;
-<<<<<<< HEAD
-        this.indiceElse=1000000000;
-=======
-        this.indiceElse=0;
->>>>>>> origin/master
+        this.indiceElse=10000000;
         this.indiceIf=0;
+        this.indiceMain = 0;
+        this.hayMain = false;
     }
      
      public void print_errors(){
@@ -237,8 +250,11 @@ public class sintactic_Analysis {
                 if(data.SymbolsTable[i][2].equals("24") && data.SymbolsTable[i + 1][2].equals("19"))
                 {
                     full = 5;
-                    indice = i;//se obtiene el indice
                     count = count + 1;
+                    if(count <= 1)
+                    {
+                        indice = i;//se obtiene el indice
+                    }
                     Main = true;
                 }
             }catch(NullPointerException e){}
@@ -256,6 +272,11 @@ public class sintactic_Analysis {
                     }catch(NullPointerException|ArrayIndexOutOfBoundsException e){};
                 }
             }
+        }
+        if(Main == true && full == 0)
+        {
+            this.hayMain = true;
+            this.indiceMain = indice;
         }
         if(count > 1)
         {
@@ -386,6 +407,40 @@ public class sintactic_Analysis {
         }
     }
     
+    public void llaves() {
+        int sumaLlaves = 0;
+        
+        if(hayMain == true)
+        {
+            try{
+                if(data.SymbolsTable[data.count_symbols - 1][2].equals("9"))
+                {
+                    for(int i = (data.count_symbols - 2); i >= (indiceMain + 5); i --)
+                    { 
+                        if(data.SymbolsTable[i][2].equals("9"))
+                        {
+                            sumaLlaves = sumaLlaves + 1;
+                        }
+                        if(data.SymbolsTable[i][2].equals("8"))
+                        {
+                            sumaLlaves = sumaLlaves - 1;
+                        }
+                    }
+                }
+                else
+                {
+                    this.indice_errores = indice_errores + 1;
+                    this.errores[indice_errores] = "Error.-En llaves";
+                }
+            }catch(NullPointerException e){}
+        }
+        if(sumaLlaves != 0)
+        {
+            this.indice_errores = indice_errores + 1;
+            this.errores[indice_errores] = "Error.- en llaves";
+        }
+    }
+    
     public void Printf(){
         int indice = 0;
         int full = 0;
@@ -511,6 +566,7 @@ public class sintactic_Analysis {
         boolean banError = false;
         boolean primeravez = true;
         String cadena = null;
+        String variable = "";
         
         for(int i = 0; i<data.count_symbols; i++){
             try{
@@ -530,7 +586,7 @@ public class sintactic_Analysis {
                             && !"char".equals(data.SymbolsTable[indice][0])     
                             && !"double".equals(data.SymbolsTable[indice][0])
                             && !"bool".equals(data.SymbolsTable[indice][0])
-                            && !"42".equals(data.SymbolsTable[indice][2])
+                            && !"44".equals(data.SymbolsTable[indice][2])
                             && !"19".equals(data.SymbolsTable[indice+1][2])
                             && !"int".equals(data.SymbolsTable[indice+1][0])
                             )
@@ -541,6 +597,11 @@ public class sintactic_Analysis {
                         if(primeravez)
                         {
                             cadena = cadena.substring(4);
+                            variable = data.SymbolsTable[indice+1][0];
+                            if(data.SymbolsTable[indice+2][1].equals("numero"))
+                            {
+                                variable = variable + data.SymbolsTable[indice+2][0];
+                            }
                             primeravez = false;
                         }
                         indice++;
@@ -555,6 +616,12 @@ public class sintactic_Analysis {
                     cadena = cadena + ";";
                     Int.Init_Int(cadena);
                     terminado = Int.Estado();
+                    if(terminado)
+                    {
+                        Vars[contVars] = variable;
+                        contVars++;
+                        //JOptionPane.showMessageDialog(null, ints[cont-1]);
+                    }
                     //JOptionPane.showMessageDialog(null, cadena+ "" + terminado);
                    }catch(NullPointerException e){}   
                 }
@@ -565,6 +632,264 @@ public class sintactic_Analysis {
                         //JOptionPane.showMessageDialog(null, banEncontrado+ "Por que entra  no mamar" + terminado);
                         this.indice_errores = indice_errores + 1;
                         this.errores[indice_errores] = "Error en Int";
+                    }
+                
+                terminado = false;
+                banEncontrado = false;
+                primeravez = true;
+                cadena = null;
+            }
+        }
+    }
+    
+    public void Float(){
+        int indice = 0;
+        boolean terminado = false;
+        boolean banEncontrado = false;
+        boolean banError = false;
+        boolean primeravez = true;
+        String cadena = null;
+        String variable = "";
+        
+        for(int i = 0; i<data.count_symbols; i++){
+            try{
+                if(data.SymbolsTable[i][2].equals("25"))
+                    {
+                        indice = i;
+                        banEncontrado = true;
+                    }
+                }catch(NullPointerException e){}
+            
+            if(banEncontrado == true)
+            {        
+                cadena = null;
+                try{
+                    while(!";".equals(data.SymbolsTable[indice][0]) 
+                            && !"float".equals(data.SymbolsTable[indice+1][0])
+                            && !"char".equals(data.SymbolsTable[indice][0])     
+                            && !"double".equals(data.SymbolsTable[indice][0])
+                            && !"bool".equals(data.SymbolsTable[indice][0])
+                            && !"44".equals(data.SymbolsTable[indice][2])
+                            && !"19".equals(data.SymbolsTable[indice+1][2])
+                            && !"int".equals(data.SymbolsTable[indice][0])
+                            )
+                    {
+                        banError = true;
+                        try{
+                        cadena = cadena + data.SymbolsTable[indice][0];
+                        if(primeravez)
+                        {
+                            cadena = cadena.substring(4);
+                            variable = data.SymbolsTable[indice+1][0];
+                            if(data.SymbolsTable[indice+2][1].equals("numero"))
+                            {
+                                variable = variable + data.SymbolsTable[indice+2][0];
+                            }
+                            primeravez = false;
+                        }
+                        indice++;
+                        }catch(NullPointerException e){}   
+                    }
+                }catch(ArrayIndexOutOfBoundsException e){}
+
+                try{
+                if(data.SymbolsTable[indice][0].equals(";"))
+                {
+                   try{
+                    cadena = cadena + ";";
+                    Float.Init_Float(cadena);
+                    terminado = Float.Estado();
+                    if(terminado)
+                    {
+                        Vars[contVars] = variable;
+                        contVars++;
+                        //JOptionPane.showMessageDialog(null, ints[cont-1]);
+                    }
+                    //JOptionPane.showMessageDialog(null, cadena+ "" + terminado);
+                   }catch(NullPointerException e){}   
+                }
+                }catch(NullPointerException|ArrayIndexOutOfBoundsException e){} 
+                
+                if(terminado == false && banEncontrado && banError)
+                    {
+                        //JOptionPane.showMessageDialog(null, banEncontrado+ "Por que entra  no mamar" + terminado);
+                        this.indice_errores = indice_errores + 1;
+                        this.errores[indice_errores] = "Error en Float";
+                    }
+                
+                terminado = false;
+                banEncontrado = false;
+                primeravez = true;
+                cadena = null;
+            }
+        }
+    }
+    
+    public void Bool(){
+        int indice = 0;
+        boolean terminado = false;
+        boolean banEncontrado = false;
+        boolean banError = false;
+        boolean primeravez = true;
+        String cadena = null;
+        String variable = "";
+        
+        for(int i = 0; i<data.count_symbols; i++){
+            try{
+                if(data.SymbolsTable[i][2].equals("27"))
+                    {
+                        indice = i;
+                        banEncontrado = true;
+                    }
+                }catch(NullPointerException e){}
+            
+            if(banEncontrado == true)
+            {        
+                cadena = null;
+                try{
+                    while(!";".equals(data.SymbolsTable[indice][0]) 
+                            && !"float".equals(data.SymbolsTable[indice][0])
+                            && !"char".equals(data.SymbolsTable[indice][0])     
+                            && !"double".equals(data.SymbolsTable[indice][0])
+                            && !"bool".equals(data.SymbolsTable[indice+1][0])
+                            && !"44".equals(data.SymbolsTable[indice][2])
+                            && !"19".equals(data.SymbolsTable[indice+1][2])
+                            && !"int".equals(data.SymbolsTable[indice][0])
+                            )
+                    {
+                        banError = true;
+                        try{
+                        cadena = cadena + data.SymbolsTable[indice][0];
+                        if(primeravez)
+                        {
+                            cadena = cadena.substring(4);
+                            variable = data.SymbolsTable[indice+1][0];
+                            if(data.SymbolsTable[indice+2][1].equals("numero"))
+                            {
+                                variable = variable + data.SymbolsTable[indice+2][0];
+                            }
+                            primeravez = false;
+                        }
+                        indice++;
+                        }catch(NullPointerException e){}   
+                    }
+                }catch(ArrayIndexOutOfBoundsException e){}
+
+                try{
+                if(data.SymbolsTable[indice][0].equals(";"))
+                {
+                   try{
+                    cadena = cadena + ";";
+                    Bool.Init_Bool(cadena);
+                    terminado = Bool.Estado();
+                    if(terminado)
+                    {
+                        Vars[contVars] = variable;
+                        contVars++;
+                        //JOptionPane.showMessageDialog(null, ints[cont-1]);
+                    }
+                    //JOptionPane.showMessageDialog(null, cadena+ "" + terminado);
+                   }catch(NullPointerException e){}   
+                }
+                }catch(NullPointerException|ArrayIndexOutOfBoundsException e){} 
+                
+                if(terminado == false && banEncontrado && banError)
+                    {
+                        //JOptionPane.showMessageDialog(null, banEncontrado+ "Por que entra  no mamar" + terminado);
+                        this.indice_errores = indice_errores + 1;
+                        this.errores[indice_errores] = "Error en Bool";
+                    }
+                
+                terminado = false;
+                banEncontrado = false;
+                primeravez = true;
+                cadena = null;
+            }
+        }
+    }
+    
+    public void Operaciones(){
+        int indice = 0;
+        boolean terminado = false;
+        boolean banEncontrado = false;
+        boolean banError = false;
+        boolean primeravez = true;
+        boolean encontrado = false;
+        String cadena = null;
+        String variable = "";
+        
+        for(int i = 0; i<data.count_symbols; i++){
+            try{
+                if(data.SymbolsTable[i][2].equals("44"))
+                    {
+                        indice = i;
+                        banEncontrado = true;
+                    }
+                }catch(NullPointerException e){}
+            
+            if(banEncontrado == true)
+            {        
+                cadena = null;
+                try{
+                    while(!";".equals(data.SymbolsTable[indice][0]) 
+                            && !"float".equals(data.SymbolsTable[indice][0])
+                            && !"char".equals(data.SymbolsTable[indice][0])     
+                            && !"double".equals(data.SymbolsTable[indice][0])
+                            && !"bool".equals(data.SymbolsTable[indice][0])
+                            && !"44".equals(data.SymbolsTable[indice+1][2])
+                            && !"19".equals(data.SymbolsTable[indice+1][2])
+                            && !"int".equals(data.SymbolsTable[indice][0])
+                            )
+                    {
+                        banError = true;
+                        try{
+                        cadena = cadena + data.SymbolsTable[indice][0];
+                        if(primeravez)
+                        {
+                            cadena = cadena.substring(4);
+                            variable = data.SymbolsTable[indice+1][0];
+                            if(data.SymbolsTable[indice+2][1].equals("numero"))
+                            {
+                                variable = variable + data.SymbolsTable[indice+2][0];
+                            }
+                            primeravez = false;
+                        }
+                        indice++;
+                        }catch(NullPointerException e){}   
+                    }
+                }catch(ArrayIndexOutOfBoundsException e){}
+
+                try{
+                if(data.SymbolsTable[indice][0].equals(";"))
+                {
+                   try{
+                    cadena = cadena + ";";
+                    cadena = cadena.substring(4);
+                    Ope.Init_Ope(cadena);
+                    terminado = Ope.Estado();
+                    for(int a = 0; a < contVars ; a++)
+                    {
+                        if(variable.equals(Vars[a]))
+                        {
+                           encontrado = true;
+                           break;
+                        }
+                    }
+                    //JOptionPane.showMessageDialog(null, cadena+ "" + terminado);
+                   }catch(NullPointerException e){}   
+                }
+                }catch(NullPointerException|ArrayIndexOutOfBoundsException e){} 
+                
+                if(encontrado == false)
+                {
+                        this.indice_errores = indice_errores + 1;
+                        this.errores[indice_errores] = "Error: Variavle no declarada";
+                }
+                if(terminado == false && banEncontrado && banError)
+                    {
+                        //JOptionPane.showMessageDialog(null, banEncontrado+ "Por que entra  no mamar" + terminado);
+                        this.indice_errores = indice_errores + 1;
+                        this.errores[indice_errores] = "Error en Operacion";
                     }
                 
                 terminado = false;

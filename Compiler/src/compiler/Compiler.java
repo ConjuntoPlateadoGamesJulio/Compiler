@@ -23,8 +23,11 @@ public class Compiler {
         lexical_Analysis lA = new lexical_Analysis();
         sintactic_Analysis sA = new sintactic_Analysis();
         sA_Int Int = new sA_Int();
+        sA_Float Float = new sA_Float();
+        sA_Bool Bool = new sA_Bool();
+        sA_Operaciones Ope = new sA_Operaciones();
         semantic_Analysis semantic = new semantic_Analysis();
-        Analysis A = new Analysis(Interface, data, lA, sA, Int, semantic);//contructor (inicializador)
+        Analysis A = new Analysis(Interface, data, lA, sA, Int, Float, Bool, Ope, semantic);//contructor (inicializador)
     }
     
 }
