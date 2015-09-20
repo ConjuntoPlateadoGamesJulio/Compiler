@@ -406,7 +406,128 @@ public class sintactic_Analysis {
             this.errores[indice_errores] = "error en else";
         }
     }
-    
+    public void automataFor(){
+        int indice=0,indiceFor=0,numeroFor=0,indiceLlave=0;
+        int llaves[]=new int [1000];
+        boolean entra=false,fin=false;
+        boolean For[]=new boolean [1000];
+        boolean anidadoFor=false,operadores=false,var=false;
+        String variable[] = new String[1000];
+        String simbolos[]={"31","4","5"};
+        for (int i = 0; i < llaves.length; i++) {
+            llaves[i]=0;
+            For[i]=false;
+            variable[i]=null;
+        }
+        for (int i = 0; i < data.count_symbols; i++) {
+            try {
+                if (data.SymbolsTable[i][2].equals("20")) {
+                    indice=i;
+                    entra=true;
+                    if (numeroFor<1) {
+                        indiceFor=i;
+                    }
+                    variable[numeroFor]=data.SymbolsTable[indice+2][0];
+                    numeroFor++;
+                }
+                if (data.SymbolsTable[indiceFor][2].equals("8")) { // busca llaves {
+                    llaves[indiceLlave]=1;     
+                    indiceLlave++;
+                } 
+                if (data.SymbolsTable[indice+1][2].equals("2")) { // (
+                    if (llaves[0]==1 && numeroFor>1) {
+                        anidadoFor=true;
+                    }
+                    for(int j=0;j<numeroFor-1;j++){
+                        if (data.SymbolsTable[indice+2][0].equals(variable[j])) { // revisa que la variable del for actual
+                            var=true;                                            // no se haya utilizado antes en un for
+                        }                                                        // anterior si es anidado
+                    }
+                    if (anidadoFor==true && data.SymbolsTable[indice+2][1].equals("variable")&& var==false) {
+                            anidadoFor=false;                                    // es verdadero si la variable esta 
+                            var=false;                                           // repetida en for anidado
+                    }
+                    if (data.SymbolsTable[indice+2][1].equals("variable")&& anidadoFor==false) { // indices
+                        if (data.SymbolsTable[indice+3][2].equals("31")) {                       //  =
+                            if (data.SymbolsTable[indice+4][1].equals("variable")||
+                                    data.SymbolsTable[indice+4][1].equals("numero")) {
+                                if (data.SymbolsTable[indice+5][2].equals("14")) {
+                                    if (data.SymbolsTable[indice+6][1].equals("variable") //asegura que sea la misma variable 
+                                         && data.SymbolsTable[indice+6][0].equals(data.SymbolsTable[indice+2][0])) {
+                                        try {
+                                            if (data.SymbolsTable[indice+8][2].equals("31")) {
+                                                for(int j=0;j<3;j++){
+                                                    if (data.SymbolsTable[indice+7][2].equals(simbolos[j])) {// = < >
+                                                        operadores=true;
+                                                    }
+                                                }
+                                                if(data.SymbolsTable[indice+9][1].equals("variable")
+                                                    || data.SymbolsTable[indice+9][1].equals("numero") && operadores==true){
+                                                    if(data.SymbolsTable[indice+10][2].equals("14")){
+                                                      if (data.SymbolsTable[indice+11][1].equals("variable") //asegura que sea la misma variable i
+                                                         && data.SymbolsTable[indice+11][0].equals(data.SymbolsTable[indice+2][0])){
+                                                          if(data.SymbolsTable[indice+12][2].equals("10")) { 
+                                                              if(data.SymbolsTable[indice+13][2].equals("10")){
+                                                                if(data.SymbolsTable[indice+14][2].equals("3")){
+                                                                    if (data.SymbolsTable[indice+15][2].equals("8")) {
+                                                                        fin=true;
+                                                                        For[numeroFor]=true;
+                                                                    }
+                                                                }
+                                                              }
+                                                          }
+                                                      }
+                                                    }
+                                                }
+                                            }
+                                        } catch (NullPointerException e) { }
+                                        if(data.SymbolsTable[indice+7][2].equals("4")||
+                                            data.SymbolsTable[indice+7][2].equals("5")){ //simbolo < >
+                                            if(data.SymbolsTable[indice+8][1].equals("variable")
+                                                || data.SymbolsTable[indice+8][1].equals("numero")){
+                                                if(data.SymbolsTable[indice+9][2].equals("14")){ // ;
+                                                    if (data.SymbolsTable[indice+10][1].equals("variable") //asegura que sea la misma variable i
+                                                        && data.SymbolsTable[indice+10][0].equals(data.SymbolsTable[indice+2][0])){
+                                                        if(data.SymbolsTable[indice+11][2].equals("10")) {
+                                                            if(data.SymbolsTable[indice+12][2].equals("10")){
+                                                                if(data.SymbolsTable[indice+13][2].equals("3")){
+                                                                    if (data.SymbolsTable[indice+14][2].equals("8")) {
+                                                                        fin=true;
+                                                                        For[numeroFor]=true;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                try{
+                    if (data.SymbolsTable[indiceFor][2].equals("9")) { // busca llaves {
+                        indiceLlave--;
+                        llaves[indiceLlave]=0;                         // y quita de la lista
+                    }
+                }catch(ArrayIndexOutOfBoundsException ex){indiceLlave=0;}
+            } catch (NullPointerException e) { }
+            indiceFor++;
+        }
+        boolean noFor=false;  
+        for (int i = 1; i <= numeroFor; i++) {  // aqui valido que todos los for
+            if (For[i]==false) {                // se terminaron con exito
+                noFor=true;
+            }
+        }
+        if(fin !=true && entra!=false  || noFor==true ){
+            this.indice_errores = indice_errores + 1;
+            this.errores[indice_errores] = "error en for";
+        }
+    }
     public void llaves() {
         int sumaLlaves = 0;
         

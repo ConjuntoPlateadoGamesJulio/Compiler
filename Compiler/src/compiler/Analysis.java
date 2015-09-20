@@ -58,6 +58,7 @@ public class Analysis implements ActionListener {
         sA.automataElse();
         sA.Printf();
         sA.automataScanf();
+        sA.automataFor();
         sA.Main();//evalua el metodo main
         sA.Int();
         sA.Float();
