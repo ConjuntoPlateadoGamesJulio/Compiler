@@ -160,6 +160,8 @@ public class data {
                     this.SymbolsTable[row][column] = token;
                     this.column = this.column + 1;//pasamos a  la otra columna
                     this.SymbolsTable[row][column] = "texto";//tipo
+                    this.column = this.column + 1;//pasamos a  la otra columna
+                    this.SymbolsTable[row][column] = "erroneo";//tipo///////////////////////////
                     this.count_symbols = count_symbols + 1;//se inserto un simbolo
                 }
             }
