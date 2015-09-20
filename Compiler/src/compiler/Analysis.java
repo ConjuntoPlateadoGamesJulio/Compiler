@@ -63,7 +63,10 @@ public class Analysis implements ActionListener {
         sA.Float();
         sA.Bool();
         sA.Operaciones();
+<<<<<<< HEAD
         sA.llaves();
+=======
+>>>>>>> origin/master
         
         //ANALISI SEMANTICO
         semantic.set_semantic_Analysis(Interface, data, sA);
