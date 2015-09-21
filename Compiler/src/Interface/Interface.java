@@ -70,7 +70,7 @@ public class Interface extends javax.swing.JFrame {
         Errores.setRows(5);
         jScrollPane2.setViewportView(Errores);
 
-        PROBANDO.setText("jButton1");
+        PROBANDO.setText("Compile");
 
         javax.swing.GroupLayout panel3Layout = new javax.swing.GroupLayout(panel3);
         panel3.setLayout(panel3Layout);

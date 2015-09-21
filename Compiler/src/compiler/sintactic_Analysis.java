@@ -375,6 +375,7 @@ public class sintactic_Analysis {
         boolean entra=false,fin=false;
         boolean ELSE[]=new boolean[100];
         boolean dobleElse=false;
+        boolean llaveAntes=false;
         for (int i = 0; i < ELSE.length; i++) {
             ELSE[i]=false;
         }
@@ -388,8 +389,11 @@ public class sintactic_Analysis {
                             if (in<1) {
                                 indiceElse=i;
                             }
+                            if (data.SymbolsTable[llave-1][2].equals("9")) {
+                                llaveAntes=true;
+                            }
                         }
-                        if (entra==true && data.SymbolsTable[llave+1][2].equals("8")) { // {
+                        if (entra==true && data.SymbolsTable[llave+1][2].equals("8") && llaveAntes==true) { // {
                             fin=true;
                             ELSE[numeroElse]=true;
                             entra=false;
@@ -405,7 +409,7 @@ public class sintactic_Analysis {
                 noElse=true;
             }
         }
-        if(fin !=true && entra!=false  || dobleElse==true || numeroElse> numeroIf || noElse==true || indiceElse<indiceIf){
+        if(fin !=true && entra!=false && llaveAntes!=true || dobleElse==true || numeroElse> numeroIf || noElse==true || indiceElse<indiceIf){
             this.indice_errores = indice_errores + 1;
             this.errores[indice_errores] = "error en else";
         }
@@ -537,16 +541,17 @@ public class sintactic_Analysis {
         
         if(hayMain == true)
         {
-            try{
+            
                 if(data.SymbolsTable[data.count_symbols - 1][2].equals("9"))
                 {
                     for(int i = (data.count_symbols - 2); i >= (indiceMain + 5); i --)
-                    { 
-                        if(data.SymbolsTable[i][2].equals("9"))
+                    {
+                    
+                        if(data.SymbolsTable[i][0].equals("}"))
                         {
                             sumaLlaves = sumaLlaves + 1;
                         }
-                        if(data.SymbolsTable[i][2].equals("8"))
+                        if(data.SymbolsTable[i][0].equals("{"))
                         {
                             sumaLlaves = sumaLlaves - 1;
                         }
@@ -557,7 +562,7 @@ public class sintactic_Analysis {
                     this.indice_errores = indice_errores + 1;
                     this.errores[indice_errores] = "Error.-En llaves";
                 }
-            }catch(NullPointerException e){}
+            
         }
         if(sumaLlaves != 0)
         {

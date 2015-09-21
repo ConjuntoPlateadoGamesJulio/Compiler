@@ -65,13 +65,8 @@ private Boolean errorVar;
             {
                 if(sintactic.variables[i][0].equals(sintactic.Vars[j][0]))
                 {
-<<<<<<< HEAD
                     sintactic.variables[i][1] = sintactic.Vars[j][1]; 
                     //System.out.println(sintactic.variables[i][0] + " " + sintactic.variables[i][1]);
-=======
-                    //sintactic.variables[i][1] = sintactic.Vars[j][1]; 
-                    System.out.println(sintactic.variables[i][0] + " " + sintactic.variables[i][1]);
->>>>>>> origin/master
                 }
             }
         }
