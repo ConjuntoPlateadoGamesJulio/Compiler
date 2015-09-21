@@ -60,17 +60,19 @@ public class Analysis implements ActionListener {
         sA.automataScanf();
         sA.automataFor();
         sA.Main();//evalua el metodo main
-        sA.vali();
+        sA.vali();    
+        sA.llaves();
         sA.Int();
         sA.Float();
         sA.Bool();
         sA.Operaciones();
-        sA.llaves();
+        
         
         //ANALISI SEMANTICO
         semantic.set_semantic_Analysis(Interface, data, sA);
         semantic.checkLibrary();//revisa que este libreria stdio.h para el scanf y printf
         semantic.checkVars();
+        semantic.checkOperacion();
         
         //IMRPIME TABLA DE SIMBOLOS Y MUESTRA ERRORES
         sA.print_errors();
