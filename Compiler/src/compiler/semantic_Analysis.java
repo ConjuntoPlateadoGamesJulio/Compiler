@@ -40,7 +40,7 @@ private Boolean errorVar;
         {
             for(int j = i+1; j < sintactic.contVars; j++)
             {
-                if(sintactic.Vars[i].equals(sintactic.Vars[j]))
+                if(sintactic.Vars[i][0].equals(sintactic.Vars[j][0]))
                 {
                     //JOptionPane.showMessageDialog(null, sintactic.ints[i] + " " + sintactic.ints[j]);
                     errorVar = true;
@@ -52,6 +52,49 @@ private Boolean errorVar;
         {
             sintactic.indice_errores = sintactic.indice_errores + 1;
             sintactic.errores[sintactic.indice_errores] = "Error.- Declaracion de variable repetida";
+        }
+    }
+    
+    public void checkOperacion(){        
+        int cont = 0;
+        int ope =0;
+        
+        for(int i = 0; i < sintactic.contVars2; i++)
+        {
+            for(int j = 0; j < sintactic.contVars; j++)
+            {
+                if(sintactic.variables[i][0].equals(sintactic.Vars[j][0]))
+                {
+                    sintactic.variables[i][1] = sintactic.Vars[j][1]; 
+                    //System.out.println(sintactic.variables[i][0] + " " + sintactic.variables[i][1]);
+                }
+            }
+        }
+        
+        for(int i = 0; i < sintactic.contVars2; i++)
+        {
+            for(int j = i+1; j < sintactic.contVars2; j++)
+            {
+                try{
+                if(sintactic.variables[i][1].equals(sintactic.variables[j][1]))
+                {
+                    //System.out.println(sintactic.variables[i][1] + " " + sintactic.variables[j][1]);
+                    cont++;
+                }
+                }catch(NullPointerException e){}
+            }
+        }
+        
+        for(int i = 0; i < sintactic.contVars2; i++)
+        {
+            ope = i + ope;
+        }
+        
+        //JOptionPane.showMessageDialog(null, cont+" "+ope);
+        if(cont != ope && cont != 0)
+        {
+            sintactic.indice_errores = sintactic.indice_errores + 1;
+            sintactic.errores[sintactic.indice_errores] = "Error.- Operacion entre tipos inconpatibles";
         }
     }
 }

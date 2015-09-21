@@ -31,7 +31,9 @@ public class sintactic_Analysis {
     private int indiceMain = 0;
     private boolean hayMain = false;
     
-    public String[] Vars;
+    public String[][] Vars;
+    public String[][] variables;
+    public int contVars2;
     public int contVars;
             
     public void setSintacticAnalysis(Interface Interface, data data, 
@@ -44,7 +46,9 @@ public class sintactic_Analysis {
         this.Ope = Ope;
         
         this.contVars = 0;
-        this.Vars = new String [50];
+        this.contVars2 = 0;
+        this.Vars = new String [50][2];
+        this.variables = new String [50][2];
     }
     
      public void inicializar_y_limpiar(){
@@ -740,7 +744,8 @@ public class sintactic_Analysis {
                     terminado = Int.Estado();
                     if(terminado)
                     {
-                        Vars[contVars] = variable;
+                        Vars[contVars][0] = variable;
+                        Vars[contVars][1] = "i";
                         contVars++;
                         //JOptionPane.showMessageDialog(null, ints[cont-1]);
                     }
@@ -824,7 +829,8 @@ public class sintactic_Analysis {
                     terminado = Float.Estado();
                     if(terminado)
                     {
-                        Vars[contVars] = variable;
+                        Vars[contVars][0] = variable;
+                        Vars[contVars][1] = "f";
                         contVars++;
                         //JOptionPane.showMessageDialog(null, ints[cont-1]);
                     }
@@ -926,7 +932,8 @@ public class sintactic_Analysis {
                     terminado = Bool.Estado();
                     if(terminado)
                     {
-                        Vars[contVars] = variable;
+                        Vars[contVars][0] = variable;
+                        Vars[contVars][1] = "b";
                         contVars++;
                         //JOptionPane.showMessageDialog(null, ints[cont-1]);
                     }
@@ -959,7 +966,6 @@ public class sintactic_Analysis {
         boolean primeravez = true;
         boolean encontrado = false;
         String cadena = null;
-        String variable = "";
         
         for(int i = 0; i<data.count_symbols; i++){
             try{
@@ -990,13 +996,18 @@ public class sintactic_Analysis {
                         if(primeravez)
                         {
                             cadena = cadena.substring(4);
-                            variable = data.SymbolsTable[indice+1][0];
-                            if(data.SymbolsTable[indice+2][1].equals("numero"))
-                            {
-                                variable = variable + data.SymbolsTable[indice+2][0];
-                            }
                             primeravez = false;
                         }
+                        if(data.SymbolsTable[indice][1].equals("variable")
+                                || data.SymbolsTable[indice][1].equals("texto"))
+                            {    
+                                variables[contVars2][0] = data.SymbolsTable[indice][0];
+                                if(data.SymbolsTable[indice+1][1].equals("numero"))
+                                {
+                                    variables[contVars2][0] = variables[contVars2][0] + data.SymbolsTable[indice][0];
+                                }
+                                contVars2++;
+                            }
                         indice++;
                         }catch(NullPointerException e){}   
                     }
@@ -1010,24 +1021,11 @@ public class sintactic_Analysis {
                     cadena = cadena.substring(4);
                     Ope.Init_Ope(cadena);
                     terminado = Ope.Estado();
-                    for(int a = 0; a < contVars ; a++)
-                    {
-                        if(variable.equals(Vars[a]))
-                        {
-                           encontrado = true;
-                           break;
-                        }
-                    }
                     //JOptionPane.showMessageDialog(null, cadena+ "" + terminado);
                    }catch(NullPointerException e){}   
                 }
                 }catch(NullPointerException|ArrayIndexOutOfBoundsException e){} 
                 
-                if(encontrado == false)
-                {
-                        this.indice_errores = indice_errores + 1;
-                        this.errores[indice_errores] = "Error: Variavle no declarada";
-                }
                 if(terminado == false && banEncontrado && banError)
                     {
                         //JOptionPane.showMessageDialog(null, banEncontrado+ "Por que entra  no mamar" + terminado);
