@@ -61,7 +61,7 @@ public class sintactic_Analysis {
         this.hayPrintf = false;
         this.Stdio = false;
         this.numeroElse=0;
-        this.numeroIf=0;
+        this.numeroIf=0;  // if 4 else 7  if 48
         this.indiceElse=10000000;
         this.indiceIf=0;
         this.indiceMain = 0;
@@ -312,11 +312,12 @@ public class sintactic_Analysis {
             try{
                 if (data.SymbolsTable[i][2].equals("23")) {  //if
                     indice=i;
-                    numeroIf++;
+                    this.numeroIf++;
                     entra=true;
                     fin=false;
                     if (in<1) {
-                        indiceIf=i;
+                        this.indiceIf=i;
+                        in++;
                     }
                 }
                 if(data.SymbolsTable[indice+1][2].equals("2") && entra==true){ // (
@@ -385,23 +386,23 @@ public class sintactic_Analysis {
                             llave=i;
                             entra=true;
                             fin=false;
-                            numeroElse++;
+                            this.numeroElse++;
+                            dobleElse=false;
                             if (in<1) {
-                                indiceElse=i;
+                                this.indiceElse=i;
+                                in++;
                             }
-                            if (data.SymbolsTable[llave-1][2].equals("9")) {
-                                llaveAntes=true;
-                            }
-                        }
-                        if (entra==true && data.SymbolsTable[llave+1][2].equals("8") && llaveAntes==true) { // {
-                            fin=true;
-                            ELSE[numeroElse]=true;
-                            entra=false;
-                            if (data.SymbolsTable[llave+2][2].equals("35")) { // {
-                                dobleElse=true;
+                        
+                            if (entra==true && data.SymbolsTable[llave+1][2].equals("8")) { // {
+                                fin=true;
+                                ELSE[numeroElse]=true;
+                                if (data.SymbolsTable[llave+2][2].equals("35")) { // {
+                                    dobleElse=true;
+                                }
                             }
                         }
                     }catch(NullPointerException ex){}
+                    
                 }
         boolean noElse=false;
         for (int i = 1; i <= numeroElse; i++) {
@@ -409,7 +410,8 @@ public class sintactic_Analysis {
                 noElse=true;
             }
         }
-        if(fin !=true && entra!=false && llaveAntes!=true || dobleElse==true || numeroElse> numeroIf || noElse==true || indiceElse<indiceIf){
+        JOptionPane.showMessageDialog(null, indiceElse+ "---" + indiceIf);
+        if(fin !=true && entra==true  || dobleElse==true || numeroElse> numeroIf || noElse==true || indiceElse<indiceIf){
             this.indice_errores = indice_errores + 1;
             this.errores[indice_errores] = "error en else";
         }
